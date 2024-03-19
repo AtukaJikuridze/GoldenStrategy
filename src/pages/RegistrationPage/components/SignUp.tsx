@@ -1,27 +1,84 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function SignUp() {
+  useEffect(() => {
+    console.log(true);
+  });
+  const [formValue, setFormValue] = useState({
+    username: "",
+    name: "",
+    email: "",
+    password: "",
+    avatar: 4,
+  });
+  const handleInput = (e: any) => {
+    const { name, value } = e.target;
+    setFormValue({ ...formValue, [name]: value });
+  };
+  const handleFormsubmit = (e: any) => {
+    e.preventDefault();
+
+    e.preventDefault();
+    console.log(true);
+
+    axios
+      .post(`https://dull-erin-marlin-cuff.cyclic.app/api/auth/register`, {
+        username: formValue.name,
+        password: formValue.password,
+        email: formValue.email,
+        name: formValue.name,
+        avatar: 5,
+      })
+      .then((response) => console.log(response));
+  };
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
     <div className="flex flex-col justify-center items-center gap-5">
-      <h1 className="text-2xl">Sign In</h1>
+      <h1 className="text-2xl">Sign Up</h1>
       <p>Enter Your Infromation</p>
-      <form className="flex flex-col gap-5">
+      <form className="flex flex-col gap-5" onSubmit={handleFormsubmit}>
         <label>
           <p className="mb-2 mx-0.5">UserName</p>
           <input
+            name="username"
             type="text"
             className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
+            onChange={handleInput}
+            value={formValue.username}
+          />
+        </label>
+        <label>
+          <p className="mb-2 mx-0.5">Full Name</p>
+          <input
+            name="name"
+            type="text"
+            className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
+            onChange={handleInput}
+            value={formValue.name}
+          />
+        </label>
+        <label>
+          <p className="mb-2 mx-0.5">Email</p>
+          <input
+            name="email"
+            type="text"
+            className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
+            onChange={handleInput}
+            value={formValue.email}
           />
         </label>
         <label>
           <p className="mb-2 mx-0.5">Password</p>
           <div className="relative ">
             <input
+              name="password"
               type={showPassword ? "text" : "password"}
               className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
+              onChange={handleInput}
+              value={formValue.password}
             />
             {showPassword ? (
               <FaEye
@@ -36,14 +93,16 @@ export default function SignUp() {
             )}
           </div>
         </label>
-        <button className="w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5">
-          SIGN IN
-        </button>
+        <input
+          className="w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5 outline-none cursor-pointer"
+          value={"SIGN UP"}
+          type="submit"
+        />
       </form>
       <div className="flex gap-5 mt-14">
-        <p className="cursor-pointer">Privacy Policy</p>
-        <p className="cursor-pointer">FAQ</p>
-        <p className="cursor-pointer">Contact Us</p>
+        <p>Privacy Policy</p>
+        <p>FAQ</p>
+        <p>Contact Us</p>
       </div>
     </div>
   );
