@@ -1,0 +1,18 @@
+@font-face {
+  font-family: interMedium;
+  src: url(./fonts/Inter-Medium.ttf);
+}
+
+body {
+  background-color: black;
+  color: #fff;
+}
+.App {
+  height: 100vh;
+}
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: interMedium;
+}
