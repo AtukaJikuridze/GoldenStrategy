@@ -1,11 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function SignUp() {
-  useEffect(() => {
-    console.log(true);
-  });
   const [formValue, setFormValue] = useState({
     username: "",
     name: "",
@@ -20,9 +17,6 @@ export default function SignUp() {
   const handleFormsubmit = (e: any) => {
     e.preventDefault();
 
-    e.preventDefault();
-    console.log(true);
-
     axios
       .post(`https://dull-erin-marlin-cuff.cyclic.app/api/auth/register`, {
         username: formValue.name,
@@ -31,12 +25,13 @@ export default function SignUp() {
         name: formValue.name,
         avatar: 5,
       })
-      .then((response) => console.log(response));
+      .then((res: object) => console.log(res));
   };
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-5">
+    <div className="flex flex-col justify-center items-center gap-5 ">
       <h1 className="text-2xl">Sign Up</h1>
       <p>Enter Your Infromation</p>
       <form className="flex flex-col gap-5" onSubmit={handleFormsubmit}>
@@ -48,6 +43,7 @@ export default function SignUp() {
             className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
             onChange={handleInput}
             value={formValue.username}
+            required
           />
         </label>
         <label>
@@ -58,6 +54,7 @@ export default function SignUp() {
             className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
             onChange={handleInput}
             value={formValue.name}
+            required
           />
         </label>
         <label>
@@ -68,6 +65,7 @@ export default function SignUp() {
             className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
             onChange={handleInput}
             value={formValue.email}
+            required
           />
         </label>
         <label>
@@ -79,6 +77,8 @@ export default function SignUp() {
               className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
               onChange={handleInput}
               value={formValue.password}
+              required
+              min={5}
             />
             {showPassword ? (
               <FaEye
@@ -94,7 +94,7 @@ export default function SignUp() {
           </div>
         </label>
         <input
-          className="w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5 outline-none cursor-pointer"
+          className="w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5 outline-none cursor-pointer hover:bg-yellowButtonHover transition-all"
           value={"SIGN UP"}
           type="submit"
         />

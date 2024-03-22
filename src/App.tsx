@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import "./App.css";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import Navbar from "./components/Navbar";

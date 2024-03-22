@@ -13,7 +13,7 @@ export default function RegistrationLeftside(props: {
         : "If you already have account click SIGN IN "}
 
       <button
-        className="w-[480px] py-5 bg-yellowButton rounded-md shadow-yellowShadow"
+        className="w-[480px] py-5 bg-yellowButton rounded-md shadow-yellowShadow hover:bg-yellowButtonHover transition-all"
         onClick={() => props.setIsLogging(!props.isLogging)}
       >
         {props.isLogging ? "SIGN UP" : "SIGN IN"}
