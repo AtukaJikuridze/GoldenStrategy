@@ -1,7 +1,9 @@
-import { useContext, useEffect, useState } from "react";
-import { MyContext } from "../../../Context/myContext";
+import { useState } from "react";
 import axios from "axios";
-export default function VerificationPannel() {
+interface Verificaton {
+  isVerifyed: null | boolean | undefined;
+}
+export default function VerificationPannel({ isVerifyed }: Verificaton) {
   const [inputVerificationValue, setInputVerificationValue] =
     useState<string>("");
 
@@ -14,12 +16,12 @@ export default function VerificationPannel() {
     );
   };
 
-  const context = useContext(MyContext);
   return (
     <div
       className={`w-full h-full absolute bg-bgBlackTransparent left-0 top-0 flex justify-center items-center transition-opacity duration-150 ${
-        // context?.emailForVerification
-        false ? "visible opacity-100" : "invisible opacity-0 "
+        isVerifyed !== undefined && !isVerifyed
+          ? "visible opacity-100"
+          : "invisible opacity-0 "
       } `}
     >
       <div className="rounded-xl bg-white w-[60%] h-[60%] flex items-center pb-14 flex-col gap-10 text-black justify-center">

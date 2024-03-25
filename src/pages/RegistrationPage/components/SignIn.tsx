@@ -6,31 +6,50 @@ import ForgotPassword from "./ForgotPassword";
 
 export default function SignUp() {
   const [userTOKEN, setUserTOKEN] = useState("");
-  const [loginInfo, setLoginInfo] = useState({
+  const [inputValues, setInputValues] = useState({
     username: "",
     password: "",
   });
-  console.log(userTOKEN);
+  const [loginInfo, setLoginInfo] = useState<loginTypes>({
+    isVerifyed: undefined,
+    userEmail: "",
+  });
 
+  interface loginTypes {
+    userEmail: string;
+    isVerifyed: null | true | undefined;
+  }
+  useEffect(() => {
+    loginInfo.isVerifyed === null &&
+      axios.post(
+        `https://dull-erin-marlin-cuff.cyclic.app/api/auth/register/verify`,
+        {
+          email: loginInfo.userEmail,
+        }
+      );
+  }, [loginInfo.isVerifyed]);
   useEffect(() => {
     userTOKEN &&
       axios
-        .get(
-          `https://dull-erin-marlin-cuff.cyclic.app/api/auth/token=${userTOKEN}`
-        )
-        .then((res) => console.log("e"));
+        .get(`https://dull-erin-marlin-cuff.cyclic.app/api/auth/${userTOKEN}`)
+        .then((res) => console.log(res));
+    // setLoginInfo({
+    //   isVerifyed: res.data.verifyed,
+    //   userEmail: res.data.email,
+    // }))
   }, [userTOKEN]);
 
   const handleInput = (e: any) => {
     const { name, value } = e.target;
-    setLoginInfo({ ...loginInfo, [name]: value });
+    setInputValues({ ...inputValues, [name]: value });
   };
+
   const loginSubmit = (e: any) => {
     e.preventDefault();
     axios
       .post(`https://dull-erin-marlin-cuff.cyclic.app/api/auth/login`, {
-        username: loginInfo.username,
-        password: loginInfo.password,
+        username: inputValues.username,
+        password: inputValues.password,
       })
       .then((res) => setUserTOKEN(res.data));
   };
@@ -45,7 +64,7 @@ export default function SignUp() {
           <p className="mb-2 mx-0.5">UserName</p>
           <input
             onChange={handleInput}
-            value={loginInfo.username}
+            value={inputValues.username}
             type="text"
             name="username"
             className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
@@ -57,7 +76,7 @@ export default function SignUp() {
             <input
               name="password"
               onChange={handleInput}
-              value={loginInfo.password}
+              value={inputValues.password}
               type={showPassword ? "text" : "password"}
               className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
             />
@@ -87,8 +106,8 @@ export default function SignUp() {
         <p className="cursor-pointer">FAQ</p>
         <p className="cursor-pointer">Contact Us</p>
       </div>
-      <ForgotPassword />
-      <VerificationPannel />
+      {/* <ForgotPassword /> */}
+      <VerificationPannel isVerifyed={loginInfo.isVerifyed} />
     </div>
   );
 }

@@ -48,6 +48,7 @@ export default function ForgotPassword() {
             Submit
           </button>
         </div>
+        <hr className="bg-black-400 w-full" />
         <input
           type="text"
           className="border p-2 outline-none"
