@@ -32,11 +32,12 @@ export default function SignUp() {
     userTOKEN &&
       axios
         .get(`https://dull-erin-marlin-cuff.cyclic.app/api/auth/${userTOKEN}`)
-        .then((res) => console.log(res));
-    // setLoginInfo({
-    //   isVerifyed: res.data.verifyed,
-    //   userEmail: res.data.email,
-    // }))
+        .then((res) =>
+          setLoginInfo({
+            isVerifyed: res.data.verifyed,
+            userEmail: res.data.email,
+          })
+        );
   }, [userTOKEN]);
 
   const handleInput = (e: any) => {
@@ -55,7 +56,7 @@ export default function SignUp() {
   };
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  return (
+  return false ? (
     <div className="flex flex-col justify-center items-center gap-5">
       <h1 className="text-2xl">Sign In</h1>
       <p>Enter Your Infromation</p>
@@ -106,8 +107,10 @@ export default function SignUp() {
         <p className="cursor-pointer">FAQ</p>
         <p className="cursor-pointer">Contact Us</p>
       </div>
-      {/* <ForgotPassword /> */}
+
       <VerificationPannel isVerifyed={loginInfo.isVerifyed} />
     </div>
+  ) : (
+    <ForgotPassword />
   );
 }
