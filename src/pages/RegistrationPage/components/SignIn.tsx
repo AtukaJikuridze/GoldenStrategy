@@ -1,24 +1,28 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import VerificationPannel from "./VerificationPannel";
 import ForgotPassword from "./ForgotPassword";
+import SignInForm from "./SignInForm";
+
+interface loginTypes {
+  userEmail: string;
+  isVerifyed: null | true | undefined;
+}
 
 export default function SignUp() {
-  const [userTOKEN, setUserTOKEN] = useState("");
+  const [userTOKEN, setUserTOKEN] = useState(""); // useris tokeni getidan modis
   const [inputValues, setInputValues] = useState({
     username: "",
     password: "",
-  });
+  }); // aq rac iwereba inputebshi dinamiurad icvleba am stateshic
   const [loginInfo, setLoginInfo] = useState<loginTypes>({
     isVerifyed: undefined,
     userEmail: "",
-  });
+  }); // login s ro achers eg info modis aq rac chaiwereba
+  const [forgotPassword, setForgotPassword] = useState<boolean>(false); // tu true aris gamoitans parolis shecvlis fanjaras
+  const [showPassword, setShowPassword] = useState<boolean>(false); // parolis chaweris velshi ro gamoachino pass tvalis gilakze dacherit
 
-  interface loginTypes {
-    userEmail: string;
-    isVerifyed: null | true | undefined;
-  }
+  console.log(userTOKEN);
   useEffect(() => {
     loginInfo.isVerifyed === null &&
       axios.post(
@@ -28,10 +32,12 @@ export default function SignUp() {
         }
       );
   }, [loginInfo.isVerifyed]);
+  console.log(loginInfo);
+
   useEffect(() => {
     userTOKEN &&
       axios
-        .get(`https://dull-erin-marlin-cuff.cyclic.app/api/auth/${userTOKEN}`)
+        .get(`https://dull-erin-marlin-cuff.cyclic.app/api/users/${userTOKEN}`)
         .then((res) =>
           setLoginInfo({
             isVerifyed: res.data.verifyed,
@@ -53,64 +59,33 @@ export default function SignUp() {
         password: inputValues.password,
       })
       .then((res) => setUserTOKEN(res.data));
-  };
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  }; // eshveba request login ze
 
-  return false ? (
+  return !forgotPassword ? (
     <div className="flex flex-col justify-center items-center gap-5">
-      <h1 className="text-2xl">Sign In</h1>
-      <p>Enter Your Infromation</p>
-      <form className="flex flex-col gap-5" onSubmit={loginSubmit}>
-        <label>
-          <p className="mb-2 mx-0.5">UserName</p>
-          <input
-            onChange={handleInput}
-            value={inputValues.username}
-            type="text"
-            name="username"
-            className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
+      {loginInfo.isVerifyed === null ? (
+        <VerificationPannel isVerifyed={loginInfo.isVerifyed} />
+      ) : (
+        <>
+          <h1 className="text-2xl">Sign In</h1>
+          <p>Enter Your Infromation</p>
+          <SignInForm
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
+            setForgotPassword={setForgotPassword}
+            loginSubmit={loginSubmit}
+            handleInput={handleInput}
+            inputValues={inputValues}
           />
-        </label>
-        <label>
-          <p className="mb-2 mx-0.5">Password</p>
-          <div className="relative ">
-            <input
-              name="password"
-              onChange={handleInput}
-              value={inputValues.password}
-              type={showPassword ? "text" : "password"}
-              className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
-            />
-            {showPassword ? (
-              <FaEye
-                className="cursor-pointer text-md absolute right-3 top-1/2 transform  -translate-y-1/2"
-                onClick={() => setShowPassword((current) => !current)}
-              />
-            ) : (
-              <FaEyeSlash
-                className="cursor-pointer text-lg absolute right-3 top-1/2 transform  -translate-y-1/2"
-                onClick={() => setShowPassword((current) => !current)}
-              />
-            )}
-          </div>
-        </label>
-        <p className="cursor-pointer">Forgot Password?</p>
-        <button
-          className="w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5 hover:bg-yellowButtonHover transition-all"
-          //   onClick={signInRequest}
-        >
-          SIGN IN
-        </button>
-      </form>
-      <div className="flex gap-5 mt-14">
-        <p className="cursor-pointer">Privacy Policy</p>
-        <p className="cursor-pointer">FAQ</p>
-        <p className="cursor-pointer">Contact Us</p>
-      </div>
-
-      <VerificationPannel isVerifyed={loginInfo.isVerifyed} />
+          <div className="flex gap-5 mt-14">
+            <p className="cursor-pointer">Privacy Policy</p>
+            <p className="cursor-pointer">FAQ</p>
+            <p className="cursor-pointer">Contact Us</p>
+          </div>{" "}
+        </>
+      )}
     </div>
   ) : (
-    <ForgotPassword />
+    <ForgotPassword setForgotPassword={setForgotPassword} />
   );
 }

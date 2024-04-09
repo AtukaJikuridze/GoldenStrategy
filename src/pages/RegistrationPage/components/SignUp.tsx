@@ -19,7 +19,7 @@ export default function SignUp() {
 
     axios
       .post(`https://dull-erin-marlin-cuff.cyclic.app/api/auth/register`, {
-        username: formValue.name,
+        username: formValue.username,
         password: formValue.password,
         email: formValue.email,
         name: formValue.name,

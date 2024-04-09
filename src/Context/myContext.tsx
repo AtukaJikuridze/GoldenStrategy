@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext } from "react";
 export const MyContext = createContext<ContextInterface | undefined>(undefined);
 
 interface ContextInterface {}

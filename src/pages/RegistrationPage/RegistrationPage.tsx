@@ -1,4 +1,3 @@
-import SelectLanguage from "./components/SelectLanguage";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import { useState } from "react";

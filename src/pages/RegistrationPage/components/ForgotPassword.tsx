@@ -2,13 +2,14 @@ import axios from "axios";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import InputMessageComp from "../../../components/InputMessage";
-export default function ForgotPassword() {
+export default function ForgotPassword(props: { setForgotPassword: Function }) {
   const [emailAdress, setEmailAdress] = useState<string>("");
   const [verificationCode, setVerificationCode] = useState<string>(""); /// ვერიფიკაციის კოდის ველიუ აქ ინახება
   const [newPassword, setNewPassword] = useState<string>(""); // newPassword ის ველიუ აქ ინახება
   const [showPassword, setShowPassword] = useState<boolean>(false); // ინფათზე NewPassword არის ღილაკი საიდანაც შეგიძლია გააკეთო Show/Hide Password
   const [isEmailCorrect, setIsEmailCorrect] = useState<boolean>(false); // თუ არის თრუ გამოიტანს ვერიფიკაციის და ახალი პასვორდის ინფათებს თუარადა დაწერს რო არასწორიაო
   const [isEmailIncorrect, setIsEmailInCorrect] = useState<boolean>(false);
+  const [buttonClickTimeout, setButtonClickTimeout] = useState(false); // button roar gaispamos click ebit
   interface inputMessageTypes {
     message: string;
     messageColor: boolean;
@@ -32,11 +33,14 @@ export default function ForgotPassword() {
         message: "",
         messageColor: false,
       });
-    }, 2000);
+      props.setForgotPassword(false);
+    }, 2500);
   };
 
   const submitEmail = (e: any) => {
     e.preventDefault();
+    setButtonClickTimeout(true);
+
     axios
       .post(
         `https://dull-erin-marlin-cuff.cyclic.app/api/auth/forgotpassword`,
@@ -44,10 +48,18 @@ export default function ForgotPassword() {
           email: emailAdress,
         }
       )
-      .then((res) => setIsEmailCorrect(res.data ? true : false))
+      .then((res) => {
+        console.log(res);
+        setIsEmailCorrect(res.data ? true : false);
+        setButtonClickTimeout(false);
+      })
       .catch((error) => {
+        console.log(error);
+
         setIsEmailCorrect(false);
         setIsEmailInCorrect(true);
+        setButtonClickTimeout(false);
+
         setTimeout(() => {
           setIsEmailInCorrect(false);
         }, 4000);
@@ -119,12 +131,21 @@ export default function ForgotPassword() {
           </div>
         </>
       )}
+      <h1
+        className="cursor-pointer w-full "
+        onClick={() => props.setForgotPassword(false)}
+      >
+        Back To SignIn Page
+      </h1>
+
       <InputMessageComp
         assigment={inputMessage.messageColor}
         message={inputMessage.message}
       />
       <button
-        className="w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow  hover:bg-yellowButtonHover transition-all"
+        className={`w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow  hover:bg-yellowButtonHover transition-all ${
+          buttonClickTimeout ? "cursor-not-allowed " : ""
+        }`}
         onClick={isEmailCorrect ? submitNewPassword : submitEmail}
       >
         Recover Password
