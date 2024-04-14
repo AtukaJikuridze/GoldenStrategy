@@ -2,6 +2,8 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import { useState } from "react";
 import RegistrationLeftside from "./components/RegistrationLeftside";
+import creditCard1 from "../../assets/creditCard1.svg";
+import creditCard2 from "../../assets/CreditCard2.svg";
 
 export default function RegistrationPage() {
   const [isLogging, setIsLogging] = useState(true); // თუ isLoggging არის True რეგისტრაციის ფეიჯზე გამოიტანს Login პანელს თუარადა Sign Up ის
@@ -9,7 +11,7 @@ export default function RegistrationPage() {
   return (
     <div className="relative p-16 h-full  ">
       {/* <SelectLanguage /> */}
-      <main className="py-[80px] text-white flex justify-around items-center h-full  ">
+      <main className="py-[80px] text-white flex justify-around items-center h-full relative">
         <RegistrationLeftside
           isLogging={isLogging}
           setIsLogging={setIsLogging}

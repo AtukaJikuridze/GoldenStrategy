@@ -1,14 +1,14 @@
 interface inputMessagesTypes {
-  assigment: boolean;
+  boolean: boolean;
   message: string;
 }
 export default function InputMessageComp({
   message,
-  assigment,
+  boolean,
 }: inputMessagesTypes) {
   return (
     <p
-      className={`font-bold ${assigment ? "text-green-600" : "text-red-700"} `}
+      className={`font-bold ${boolean ? "text-green-600" : "text-red-700"} `}
     >
       {message}
     </p>

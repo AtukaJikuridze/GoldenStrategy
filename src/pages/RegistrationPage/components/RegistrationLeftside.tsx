@@ -3,7 +3,7 @@ export default function RegistrationLeftside(props: {
   setIsLogging: Function;
 }) {
   return (
-    <div className="flex flex-col gap-5 items-center">
+    <div className="flex flex-col gap-5 items-center relative z-10 bg-creditCard">
       <h1 className="text-2xl">Golden Strategy</h1>
       <div className="w-[45px] h-[2px] bg-yellowButton shadow-yellowShadow"></div>
       <p className="text-lg">Welcome To our Website</p>

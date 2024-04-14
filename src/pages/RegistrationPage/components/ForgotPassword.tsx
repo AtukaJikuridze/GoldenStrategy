@@ -96,7 +96,7 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
       {isEmailIncorrect && (
         <InputMessageComp
           message="Email is Incorrect"
-          assigment={!isEmailIncorrect}
+          boolean={!isEmailIncorrect}
         />
       )}
       {isEmailCorrect && (
@@ -139,7 +139,7 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
       </h1>
 
       <InputMessageComp
-        assigment={inputMessage.messageColor}
+        boolean={inputMessage.messageColor}
         message={inputMessage.message}
       />
       <button

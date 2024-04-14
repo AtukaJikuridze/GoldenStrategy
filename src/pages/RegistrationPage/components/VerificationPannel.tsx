@@ -1,12 +1,24 @@
 import { useState } from "react";
 import axios from "axios";
 import InputMessageComp from "../../../components/InputMessage";
-interface Verificaton {
-  isVerifyed: null | boolean | undefined;
-}
-export default function VerificationPannel({ isVerifyed }: Verificaton) {
-  const [verificationCode, setVerificationCode] = useState<string>("");
 
+export default function VerificationPannel(props: { setLoginInfo: Function }) {
+  const [verificationCode, setVerificationCode] = useState<string>("");
+  const [submitMessage, setSubmitMessage] = useState<boolean | undefined>(
+    undefined
+  ); // verification code ს დასაბმითბისას გამოიტანს ან სწორია და ვერიფიკაცია წარმატებით გაიარე ან ვერიფიკაციის კოდი არასწორია
+  const verificationSuccess = () => {
+    setSubmitMessage(true);
+    setTimeout(() => {
+      props.setLoginInfo({
+        isVerifyed: "true",
+        userEmail: "",
+      });
+    }, 2000);
+  };
+  const somethingWrong = () => {
+    setSubmitMessage(false);
+  };
   const submitVerificationCode = () => {
     axios
       .put(
@@ -15,7 +27,10 @@ export default function VerificationPannel({ isVerifyed }: Verificaton) {
           verificationnumber: verificationCode,
         }
       )
-      .then(() => console.log("sbumite"));
+      .then(() => verificationSuccess())
+      .catch(() => {
+        somethingWrong();
+      });
   };
 
   return (
@@ -31,10 +46,26 @@ export default function VerificationPannel({ isVerifyed }: Verificaton) {
           className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
         />
       </div>
+      {submitMessage !== undefined ? (
+        submitMessage ? (
+          <InputMessageComp
+            boolean={submitMessage}
+            message={"Verification Success"}
+          />
+        ) : (
+          <InputMessageComp
+            boolean={
+              submitMessage !== undefined && !submitMessage ? false : true
+            }
+            message={"Verification Code is incorrect"}
+          />
+        )
+      ) : (
+        <></>
+      )}
 
       <h1 className="cursor-pointer w-full ">Back To SignIn Page</h1>
 
-      <InputMessageComp assigment={true} message={""} />
       <button
         className={`w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow  hover:bg-yellowButtonHover transition-all 
       

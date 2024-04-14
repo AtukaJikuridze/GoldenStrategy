@@ -12,7 +12,7 @@ interface loginTypes {
 export default function SignUp() {
   const [userTOKEN, setUserTOKEN] = useState(""); // useris tokeni getidan modis
   const [inputValues, setInputValues] = useState({
-    username: "",
+    usernameOrEmail: "",
     password: "",
   }); // aq rac iwereba inputebshi dinamiurad icvleba am stateshic
   const [loginInfo, setLoginInfo] = useState<loginTypes>({
@@ -55,7 +55,7 @@ export default function SignUp() {
     e.preventDefault();
     axios
       .post(`https://dull-erin-marlin-cuff.cyclic.app/api/auth/login`, {
-        username: inputValues.username,
+        usernameOrEmail: inputValues.usernameOrEmail,
         password: inputValues.password,
       })
       .then((res) => setUserTOKEN(res.data));
@@ -64,7 +64,7 @@ export default function SignUp() {
   return !forgotPassword ? (
     <div className="flex flex-col justify-center items-center gap-5">
       {loginInfo.isVerifyed === null ? (
-        <VerificationPannel isVerifyed={loginInfo.isVerifyed} />
+        <VerificationPannel setLoginInfo={setLoginInfo} />
       ) : (
         <>
           <h1 className="text-2xl">Sign In</h1>

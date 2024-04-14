@@ -7,7 +7,7 @@ interface formTypes {
   loginSubmit: (e: any) => void;
   handleInput: (e: any) => void;
   inputValues: {
-    username: string;
+    usernameOrEmail: string;
     password: string;
   };
 }
@@ -26,9 +26,9 @@ export default function SignInForm({
         <p className="mb-2 mx-0.5">UserName</p>
         <input
           onChange={handleInput}
-          value={inputValues.username}
+          value={inputValues.usernameOrEmail}
           type="text"
-          name="username"
+          name="usernameOrEmail"
           className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
         />
       </label>
