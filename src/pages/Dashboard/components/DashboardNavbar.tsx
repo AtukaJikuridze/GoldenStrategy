@@ -37,17 +37,18 @@ export default function DashboardNavbar() {
             {links.map((e, i) => (
               <li
                 key={i}
-                className={`cursor-pointer transition-all relative h-full flex justify-center items-center ${
+                className={`cursor-pointer transition-all relative h-full flex justify-center items-center  ${
                   activeLink === i ? "text-white" : "text-gray-400"
                 } `}
                 onClick={() => setActiveLink(i)}
               >
                 {e.title}
-                {activeLink === i ? (
-                  <div className="border-b w-full border-[2px] rounded-xl absolute bottom-0 left-0 border-yellowButton"></div>
-                ) : (
-                  ""
-                )}
+
+                <div
+                  className={`${
+                    activeLink === i ? "opacity-100" : "opacity-0"
+                  } border-b w-full border-[2px] transition-all rounded-xl absolute bottom-0 left-0 border-yellowButton `}
+                ></div>
               </li>
             ))}
           </ul>
