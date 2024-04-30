@@ -2,6 +2,18 @@
   font-family: interMedium;
   src: url(./fonts/Inter-Medium.ttf);
 }
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: interMedium;
+}
+
+.myContainer {
+  width: 1540px;
+  margin: auto;
+  max-width: 80%;
+}
 
 body {
   background-color: black;
@@ -9,10 +21,4 @@ body {
 }
 .App {
   height: 100vh;
-}
-* {
-  margin: 0px;
-  padding: 0px;
-  box-sizing: border-box;
-  font-family: interMedium;
 }
