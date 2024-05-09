@@ -25,7 +25,8 @@ export default function SignUp() {
         name: formValue.name,
         avatar: 5,
       })
-      .then((res: object) => console.log(res));
+      .then((res: object) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
