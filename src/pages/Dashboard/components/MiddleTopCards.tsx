@@ -3,8 +3,10 @@ import creditCard from "../../../assets/creditCard1.svg";
 import topRanks from "../../../assets/topRanksIcon.svg";
 import TopRating from "./TopRating";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { MyContext } from "../../../Context/myContext";
 export default function MiddleTopCards() {
+  const context = useContext(MyContext);
   useEffect(() => {
     axios
       .get("https://dull-erin-marlin-cuff.cyclic.app/api/results")
@@ -12,7 +14,6 @@ export default function MiddleTopCards() {
   }, []);
 
   const [leaderboardInfo, setLeaderboardInfo] = useState<[] | null>(null);
-  console.log(leaderboardInfo);
 
   return (
     <div className="flex w-full justify-between ">
@@ -21,7 +22,7 @@ export default function MiddleTopCards() {
           <img src={creditCard} alt="" className="w-[200px]" />
           <div className="text-center px-5">
             <p>Total Balance</p>
-            <p className="text-sm my-5">28.555,83$</p>
+            <p className="text-sm my-5">{context?.userInfo?.data.balance}$</p>
             <div className="flex gap-5">
               <button className="text-black text-sm bg-yellowButton py-2 rounded-lg w-[150px] text-center">
                 Deposit
@@ -35,7 +36,9 @@ export default function MiddleTopCards() {
         <div className="relative">
           <img src={dComp3} alt="" />
           <div className="bg-yellowButton w-[70%] text-center p-2 rounded-md absolute  left-1/2 transform -translate-x-1/2 bottom-5  ">
-            <p className="text-black text-sm">Tickets 21</p>
+            <p className="text-black text-sm">
+              Tickets {context?.userInfo?.data.tickets}
+            </p>
           </div>
         </div>
       </div>

@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import user from "../../../assets/user.svg";
 import bell from "../../../assets/bell.svg";
 import logout from "../../../assets/logout.svg";
+import { MyContext } from "../../../Context/myContext";
 
 export default function DashboardNavbar() {
+  const context = useContext(MyContext);
   const links = [
     {
       title: "Dashboard",
@@ -28,7 +30,7 @@ export default function DashboardNavbar() {
 
       <div className="bg-cardBgBlack py-5 px-8 rounded-xl flex items-center gap-5 ">
         <img src={user} alt="" />
-        <p className="text-sm">Anonymus-205</p>
+        <p className="text-sm">{context?.userInfo?.data.username}</p>
       </div>
 
       <div className="flex justify-between  h-full bg-cardBgBlack px-14 rounded-xl w-[50%]">

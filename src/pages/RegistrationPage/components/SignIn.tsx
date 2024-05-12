@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import VerificationPannel from "./VerificationPannel";
 import ForgotPassword from "./ForgotPassword";
 import SignInForm from "./SignInForm";
-
+import { MyContext } from "../../../Context/myContext";
+import { useContext } from "react";
 interface loginTypes {
   userEmail: string;
   isVerifyed: null | true | undefined;
 }
 
 export default function SignUp() {
+  const context = useContext(MyContext);
+
   const [userTOKEN, setUserTOKEN] = useState(""); // useris tokeni getidan modis
   const [inputValues, setInputValues] = useState({
     usernameOrEmail: "",
@@ -22,7 +25,6 @@ export default function SignUp() {
   const [forgotPassword, setForgotPassword] = useState<boolean>(false); // tu true aris gamoitans parolis shecvlis fanjaras
   const [showPassword, setShowPassword] = useState<boolean>(false); // parolis chaweris velshi ro gamoachino pass tvalis gilakze dacherit
 
-  console.log(userTOKEN);
   useEffect(() => {
     loginInfo.isVerifyed === null &&
       axios.post(
@@ -32,18 +34,18 @@ export default function SignUp() {
         }
       );
   }, [loginInfo.isVerifyed]);
-  console.log(loginInfo);
 
   useEffect(() => {
     userTOKEN &&
       axios
         .get(`https://dull-erin-marlin-cuff.cyclic.app/api/users/${userTOKEN}`)
-        .then((res) =>
+        .then((res) => {
           setLoginInfo({
             isVerifyed: res.data.verifyed,
             userEmail: res.data.email,
-          })
-        );
+          });
+          context?.setUserInfo(res);
+        });
   }, [userTOKEN]);
 
   const handleInput = (e: any) => {

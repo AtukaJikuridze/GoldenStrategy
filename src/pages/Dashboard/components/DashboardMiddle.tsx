@@ -1,8 +1,25 @@
 import MiddleTopCards from "./MiddleTopCards";
 import dComp4 from "../../../assets/dashboardComponent4.svg";
 import dComp5 from "../../../assets/dashboardComponent5.svg";
+import axios from "axios";
+import { MyContext } from "../../../Context/myContext";
+import { useContext } from "react";
 
 export default function DashboardMiddle() {
+  const context = useContext(MyContext);
+  console.log(context?.userInfo?.data.email);
+
+  axios
+    .get("https://dull-erin-marlin-cuff.cyclic.app/api/users/transactions", {
+      params: { email: context?.userInfo?.data.email },
+    })
+    .then((response) => {
+      console.log(response.data + "asd");
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+
   return (
     <div className="w-full">
       <MiddleTopCards />
