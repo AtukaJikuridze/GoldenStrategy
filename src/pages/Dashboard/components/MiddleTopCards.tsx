@@ -8,9 +8,9 @@ import { MyContext } from "../../../Context/myContext";
 export default function MiddleTopCards() {
   const context = useContext(MyContext);
   useEffect(() => {
-    axios
-      .get("https://dull-erin-marlin-cuff.cyclic.app/api/results")
-      .then((res) => setLeaderboardInfo(res.data));
+    axios.get("https://testapi-z1tw.onrender.com/api/results").then((res) => {
+      setLeaderboardInfo(res.data);
+    });
   }, []);
 
   const [leaderboardInfo, setLeaderboardInfo] = useState<[] | null>(null);
@@ -22,7 +22,7 @@ export default function MiddleTopCards() {
           <img src={creditCard} alt="" className="w-[200px]" />
           <div className="text-center px-5">
             <p>Total Balance</p>
-            <p className="text-sm my-5">{context?.userInfo?.data.balance}$</p>
+            <p className="text-sm my-5">{context?.userInfo?.balance}$</p>
             <div className="flex gap-5">
               <button className="text-black text-sm bg-yellowButton py-2 rounded-lg w-[150px] text-center">
                 Deposit
@@ -37,7 +37,7 @@ export default function MiddleTopCards() {
           <img src={dComp3} alt="" />
           <div className="bg-yellowButton w-[70%] text-center p-2 rounded-md absolute  left-1/2 transform -translate-x-1/2 bottom-5  ">
             <p className="text-black text-sm">
-              Tickets {context?.userInfo?.data.tickets}
+              Tickets {context?.userInfo?.tickets}
             </p>
           </div>
         </div>

@@ -1,24 +1,18 @@
 import MiddleTopCards from "./MiddleTopCards";
 import dComp4 from "../../../assets/dashboardComponent4.svg";
 import dComp5 from "../../../assets/dashboardComponent5.svg";
-import axios from "axios";
 import { MyContext } from "../../../Context/myContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import TransactionDetails from "./TransactionDetails";
 
 export default function DashboardMiddle() {
   const context = useContext(MyContext);
-  console.log(context?.userInfo?.data.email);
 
-  axios
-    .get("https://dull-erin-marlin-cuff.cyclic.app/api/users/transactions", {
-      params: { email: context?.userInfo?.data.email },
-    })
-    .then((response) => {
-      console.log(response.data + "asd");
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+  useEffect(() => {
+    setLastTransactions(context?.userTransactions);
+  }, [context?.userTransactions]);
+
+  const [lastTransactions, setLastTransactions] = useState<null | any>(null);
 
   return (
     <div className="w-full">
@@ -43,9 +37,15 @@ export default function DashboardMiddle() {
               <div className="border border-yellowButton w-10"></div>
             </div>
             <div className="flex items-center mt-10 flex-col gap-5">
-              <p className="">Deposit</p>
-              <p className="opacity-10">Deposit</p>
-              <p className="opacity-10">Deposit</p>
+              <p className=" capitalize">
+                {lastTransactions ? lastTransactions[0].trasaction_info : ""}
+              </p>
+              <p className="opacity-10 capitalize">
+                {lastTransactions ? lastTransactions[1].trasaction_info : ""}
+              </p>
+              <p className="opacity-10 capitalize">
+                {lastTransactions ? lastTransactions[2].trasaction_info : ""}
+              </p>
             </div>
           </div>
           <div className="">
@@ -53,8 +53,8 @@ export default function DashboardMiddle() {
               <p>Amount</p>
               <div className="border border-yellowButton w-10"></div>
             </div>
-            <div className="flex items-center mt-10 flex-col gap-5">
-              <p>3.47$</p>
+            <div className="flex items-center my-8 flex-col gap-5">
+              <p>{lastTransactions ? lastTransactions[2].amount : ""}$</p>
               <p className="text-2xl cursor-pointer">Details</p>
             </div>
           </div>
@@ -64,12 +64,17 @@ export default function DashboardMiddle() {
               <div className="border border-yellowButton w-10"></div>
             </div>
             <div className="flex items-center mt-10 flex-col gap-5">
-              <p className="">10.04.2023</p>
-              <p className="opacity-10">10.04.2023</p>
-              <p className="opacity-10">10.04.2023</p>
+              <p>{lastTransactions ? lastTransactions[0].date : ""}</p>
+              <p className="opacity-10">
+                {lastTransactions ? lastTransactions[1].date : ""}
+              </p>
+              <p className="opacity-10">
+                {lastTransactions ? lastTransactions[2].date : ""}
+              </p>
             </div>
           </div>
         </div>
+        <TransactionDetails />
       </div>
     </div>
   );

@@ -9,11 +9,11 @@ export default function Dashboard() {
   useEffect(() => {
     axios
       .get(
-        `https://dull-erin-marlin-cuff.cyclic.app/api/users/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF0dWthIiwiaWF0IjoxNzE1NTA4OTMyfQ.yPtYnWR4y493Eh6i73MAWUTn4wd6keVAvO9jFyfRbSA`
+        `https://testapi-z1tw.onrender.com/api/users/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF0dWthIiwiaWF0IjoxNzE1NTA4OTMyfQ.yPtYnWR4y493Eh6i73MAWUTn4wd6keVAvO9jFyfRbSA`
       )
       .then((res) => {
-        context?.setUserInfo(res);
-        console.log(res);
+        context?.setUserInfo(res.data.userData[0]);
+        context?.setUserTransactions(res.data.transactions);
       });
   }, []);
   return (

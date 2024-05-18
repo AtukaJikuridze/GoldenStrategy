@@ -6,6 +6,7 @@ import { MyContext } from "../../../Context/myContext";
 
 export default function DashboardNavbar() {
   const context = useContext(MyContext);
+
   const links = [
     {
       title: "Dashboard",
@@ -20,6 +21,7 @@ export default function DashboardNavbar() {
       linkTo: "",
     },
   ];
+
   const [activeLink, setActiveLink] = useState<number>(0);
 
   return (
@@ -30,7 +32,7 @@ export default function DashboardNavbar() {
 
       <div className="bg-cardBgBlack py-5 px-8 rounded-xl flex items-center gap-5 ">
         <img src={user} alt="" />
-        <p className="text-sm">{context?.userInfo?.data.username}</p>
+        <p className="text-sm">{context?.userInfo?.username}</p>
       </div>
 
       <div className="flex justify-between  h-full bg-cardBgBlack px-14 rounded-xl w-[50%]">
