@@ -40,11 +40,11 @@ interface userInterface {
   x_card_with_coin: number;
   x_card_with_money: number;
 }
-interface tranasctionsInterface {
+export interface tranasctionsInterface {
   amount: number;
   date: string;
   status: string;
-  transactionInfo: string;
+  trasaction_info: string;
 }
 
 export const MyContextProvider = ({ children }: any) => {

@@ -22,3 +22,6 @@ body {
 .App {
   height: 100vh;
 }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

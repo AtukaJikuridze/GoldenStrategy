@@ -7,6 +7,8 @@ import TransactionDetails from "./TransactionDetails";
 
 export default function DashboardMiddle() {
   const context = useContext(MyContext);
+  const [isTransactionDetailsActive, setIsTransactionDetailsActive] =
+    useState(false);
 
   useEffect(() => {
     setLastTransactions(context?.userTransactions);
@@ -55,7 +57,12 @@ export default function DashboardMiddle() {
             </div>
             <div className="flex items-center my-8 flex-col gap-5">
               <p>{lastTransactions ? lastTransactions[2].amount : ""}$</p>
-              <p className="text-2xl cursor-pointer">Details</p>
+              <p
+                className="text-2xl cursor-pointer"
+                onClick={() => setIsTransactionDetailsActive(true)}
+              >
+                Details
+              </p>
             </div>
           </div>
           <div className="">
@@ -74,7 +81,10 @@ export default function DashboardMiddle() {
             </div>
           </div>
         </div>
-        <TransactionDetails />
+        <TransactionDetails
+          isTransactionDetailsActive={isTransactionDetailsActive}
+          setIsTransactionDetailsActive={setIsTransactionDetailsActive}
+        />
       </div>
     </div>
   );
