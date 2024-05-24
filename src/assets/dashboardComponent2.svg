@@ -2,7 +2,7 @@
 <mask id="path-1-inside-1_15_289" fill="white">
 <rect width="400" height="200" rx="12"/>
 </mask>
-<rect width="400" height="200" rx="12" fill="url(#pattern0_15_289)" stroke="#141414" stroke-opacity="0.45" stroke-width="30" mask="url(#path-1-inside-1_15_289)"/>
+<rect width="400" height="200" rx="12" fill="url(#pattern0_15_289)" stroke="#141414" strokeOpacity="0.45" strokeWidth="30" mask="url(#path-1-inside-1_15_289)"/>
 <defs>
 <pattern id="pattern0_15_289" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_15_289" transform="matrix(0.000625 0 0 0.00125 0 -0.5)"/>

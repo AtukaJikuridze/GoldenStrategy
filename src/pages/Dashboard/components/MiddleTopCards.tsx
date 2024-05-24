@@ -2,20 +2,14 @@ import dComp3 from "../../../assets/dashboardComponent3.svg";
 import creditCard from "../../../assets/creditCard1.svg";
 import topRanks from "../../../assets/topRanksIcon.svg";
 import TopRating from "./TopRating";
-import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { MyContext } from "../../../Context/myContext";
-import { API } from "../../../baseAPI";
 import Loader from "../../../components/Loader";
-export default function MiddleTopCards() {
+export default function MiddleTopCards(props: {
+  setIsRankLeaderboardActive: Function;
+  leaderBoardInfo: any;
+}) {
   const context = useContext(MyContext);
-  useEffect(() => {
-    axios.get(`${API}/results`).then((res) => {
-      setLeaderboardInfo(res.data);
-    });
-  }, []);
-
-  const [leaderboardInfo, setLeaderboardInfo] = useState<[] | null>(null);
 
   return (
     <div className="flex w-full justify-between ">
@@ -45,16 +39,19 @@ export default function MiddleTopCards() {
         </div>
       </div>
       <div className=" bg-cardBgBlack pt-5 px-14 rounded-lg flex flex-col justify-between">
-        <div className="flex gap-3 justify-center ">
+        <div
+          className="flex gap-3 justify-center cursor-pointer"
+          onClick={() => props.setIsRankLeaderboardActive(true)}
+        >
           <p>Top Ranks</p>
           <img src={topRanks} alt="" />
         </div>
 
-        {leaderboardInfo ? (
-          <TopRating ratingInfo={leaderboardInfo} />
+        {props.leaderBoardInfo ? (
+          <TopRating ratingInfo={props.leaderBoardInfo} />
         ) : (
-          <div className="  h-full flex items-center justify-center px-14">
-            <Loader width={"60"} height={"60"} />
+          <div className="h-full flex items-center justify-center px-14">
+            <Loader width={"60px"} />
           </div>
         )}
       </div>

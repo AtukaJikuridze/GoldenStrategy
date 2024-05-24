@@ -48,8 +48,10 @@ export interface tranasctionsInterface {
 }
 
 export const MyContextProvider = ({ children }: any) => {
+  
   const [userTransactions, setUserTransactions] =
     useState<null | tranasctionsInterface>(null);
+
   const [userInfo, setUserInfo] = useState<null | userInterface>(null);
 
   return (

@@ -1,6 +1,5 @@
 import { useContext, useEffect } from "react";
 import DashboardMain from "./components/DashboardMain";
-import DashboardNavbar from "./components/DashboardNavbar";
 import axios from "axios";
 import { MyContext } from "../../Context/myContext";
 import { API } from "../../baseAPI";
@@ -14,14 +13,11 @@ export default function Dashboard() {
       )
       .then((res) => {
         context?.setUserInfo(res.data.userData[0]);
-
         context?.setUserTransactions(res.data.transactions);
-        console.log(res.data.transactions);
       });
   }, []);
   return (
     <>
-      <DashboardNavbar />
       <DashboardMain />
     </>
   );

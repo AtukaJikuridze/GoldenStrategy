@@ -4,21 +4,42 @@ import dComp5 from "../../../assets/dashboardComponent5.svg";
 import { MyContext } from "../../../Context/myContext";
 import { useContext, useEffect, useState } from "react";
 import TransactionDetails from "./TransactionDetails";
+import TopRankLeaderboard from "./TopRankLeaderboard";
+import axios from "axios";
+import { API } from "../../../baseAPI";
 
 export default function DashboardMiddle() {
   const context = useContext(MyContext);
-  const [isTransactionDetailsActive, setIsTransactionDetailsActive] =
-    useState(false);
+
+  useEffect(() => {
+    axios.get(`${API}/results`).then((res) => {
+      setLeaderboardInfo(res.data);
+    });
+  }, []);
 
   useEffect(() => {
     setLastTransactions(context?.userTransactions);
   }, [context?.userTransactions]);
 
-  const [lastTransactions, setLastTransactions] = useState<null | any>(null);
+  const [lastTransactions, setLastTransactions] = useState<null | any>(null); // transaction info modis aq
+  const [leaderboardInfo, setLeaderboardInfo] = useState<[] | null>(null); // top ranks info modis aq
 
+  const [isRankLeaderboardActive, setIsRankLeaderboardActive] =
+    useState<boolean>(false); // top ranks details ro daacher da popup gamodis tu true aris gamochndeba tuarada ara
+
+  const [isTransactionDetailsActive, setIsTransactionDetailsActive] =
+    useState(false); // tranzaqciebis details ro daacher da popup gamodis tu true aris gamochndeba tuarada ara
   return (
-    <div className="w-full">
-      <MiddleTopCards />
+    <div className="w-full ">
+      <MiddleTopCards
+        setIsRankLeaderboardActive={setIsRankLeaderboardActive}
+        leaderBoardInfo={leaderboardInfo}
+      />
+      <TopRankLeaderboard
+        isRankLeaderboardActive={isRankLeaderboardActive}
+        setIsRankLeaderboardActive={setIsRankLeaderboardActive}
+        leaderBoardInfo={leaderboardInfo}
+      />
 
       <div className="flex my-14 justify-between">
         <div className="bg-cardBgBlack flex justify-between pr-32 w-[70%] rounded-xl items-center">
