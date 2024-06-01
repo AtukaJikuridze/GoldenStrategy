@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { API } from "../../../baseAPI";
 
 export default function SignUp() {
   const [formValue, setFormValue] = useState({
@@ -18,7 +19,7 @@ export default function SignUp() {
     e.preventDefault();
 
     axios
-      .post(`https://dull-erin-marlin-cuff.cyclic.app/api/auth/register`, {
+      .post(`${API}/api/auth/register`, {
         username: formValue.username,
         password: formValue.password,
         email: formValue.email,

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import InputMessageComp from "../../../components/InputMessage";
+import { API } from "../../../baseAPI";
 
 export default function VerificationPannel(props: { setLoginInfo: Function }) {
   const [verificationCode, setVerificationCode] = useState<string>("");
@@ -21,12 +22,9 @@ export default function VerificationPannel(props: { setLoginInfo: Function }) {
   };
   const submitVerificationCode = () => {
     axios
-      .put(
-        `https://dull-erin-marlin-cuff.cyclic.app/api/auth/register/verify`,
-        {
-          verificationnumber: verificationCode,
-        }
-      )
+      .put(`${API}/api/auth/register/verify`, {
+        verificationnumber: verificationCode,
+      })
       .then(() => verificationSuccess())
       .catch(() => {
         somethingWrong();

@@ -5,6 +5,7 @@ import ForgotPassword from "./ForgotPassword";
 import SignInForm from "./SignInForm";
 import { MyContext } from "../../../Context/myContext";
 import { useContext } from "react";
+import { API } from "../../../baseAPI";
 interface loginTypes {
   userEmail: string;
   isVerifyed: null | true | undefined;
@@ -27,18 +28,15 @@ export default function SignUp() {
 
   useEffect(() => {
     loginInfo.isVerifyed === null &&
-      axios.post(
-        `https://dull-erin-marlin-cuff.cyclic.app/api/auth/register/verify`,
-        {
-          email: loginInfo.userEmail,
-        }
-      );
+      axios.post(`${API}/api/auth/register/verify`, {
+        email: loginInfo.userEmail,
+      });
   }, [loginInfo.isVerifyed]);
 
   useEffect(() => {
     userTOKEN &&
       axios
-        .get(`https://dull-erin-marlin-cuff.cyclic.app/api/users/${userTOKEN}`)
+        .get(`${API}/api/users/${userTOKEN}`)
         .then((res) => {
           setLoginInfo({
             isVerifyed: res.data.verifyed,
@@ -56,7 +54,7 @@ export default function SignUp() {
   const loginSubmit = (e: any) => {
     e.preventDefault();
     axios
-      .post(`https://dull-erin-marlin-cuff.cyclic.app/api/auth/login`, {
+      .post(`${API}/api/auth/login`, {
         usernameOrEmail: inputValues.usernameOrEmail,
         password: inputValues.password,
       })

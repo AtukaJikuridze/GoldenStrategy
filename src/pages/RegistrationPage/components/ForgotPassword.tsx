@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import InputMessageComp from "../../../components/InputMessage";
+import { API } from "../../../baseAPI";
 export default function ForgotPassword(props: { setForgotPassword: Function }) {
   const [emailAdress, setEmailAdress] = useState<string>("");
   const [verificationCode, setVerificationCode] = useState<string>(""); /// ვერიფიკაციის კოდის ველიუ აქ ინახება
@@ -42,12 +43,9 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
     setButtonClickTimeout(true);
 
     axios
-      .post(
-        `https://dull-erin-marlin-cuff.cyclic.app/api/auth/forgotpassword`,
-        {
-          email: emailAdress,
-        }
-      )
+      .post(`${API}/api/auth/forgotpassword`, {
+        email: emailAdress,
+      })
       .then((res) => {
         console.log(res);
         setIsEmailCorrect(res.data ? true : false);
@@ -69,7 +67,7 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
     e.preventDefault();
 
     axios
-      .put(`https://dull-erin-marlin-cuff.cyclic.app/api/auth/forgotpassword`, {
+      .put(`${API}/api/auth/forgotpassword`, {
         verificationCode,
         newPassword,
       })
