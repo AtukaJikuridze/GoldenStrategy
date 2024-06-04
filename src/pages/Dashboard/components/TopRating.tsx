@@ -22,7 +22,7 @@ export default function TopRating({ ratingInfo }: topRatingInterface) {
       </div>
       <div className="flex flex-col items-center ">
         <img src={user} alt="" width={26} className="mt-1" />
-        <p className="text-sm">Nick J.</p>
+        <p className="text-sm">{ratingInfo[2]?.username}</p>
         <div className="h-full  flex flex-col justify-end ">
           <div className="bg-yellowButton w-[20px] h-[60px] rounded-t-lg  "></div>
         </div>

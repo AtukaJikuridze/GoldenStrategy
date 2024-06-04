@@ -11,7 +11,7 @@ function App() {
       <Navbar />
       <Game />
       {/* <RegistrationPage /> */}
-      <Dashboard />
+      {/* <Dashboard /> */}
     </div>
   );
 }

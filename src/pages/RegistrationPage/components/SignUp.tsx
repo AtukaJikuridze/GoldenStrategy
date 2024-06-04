@@ -9,7 +9,7 @@ export default function SignUp() {
     name: "",
     email: "",
     password: "",
-    avatar: 4,
+    avatar: 1,
   });
   const handleInput = (e: any) => {
     const { name, value } = e.target;
