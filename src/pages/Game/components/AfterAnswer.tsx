@@ -1,4 +1,4 @@
-import React from "react";
+
 interface afterAnswerInterface{
   nextQuestion: Function,
   answer:string,

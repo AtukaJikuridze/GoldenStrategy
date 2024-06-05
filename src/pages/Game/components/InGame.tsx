@@ -1,9 +1,9 @@
 import axios from "axios";
-import { API } from "../../baseAPI";
+import { API } from "../../../baseAPI";
 import Help from "./Help";
 import { useEffect, useState } from "react";
 import { useContext } from "react";
-import { MyContext } from "../../Context/myContext";
+import { MyContext } from "../../../Context/myContext";
 import Question from "./Question";
 
 export default function InGame() {

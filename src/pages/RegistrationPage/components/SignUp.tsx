@@ -19,7 +19,7 @@ export default function SignUp() {
     e.preventDefault();
 
     axios
-      .post(`${API}/api/auth/register`, {
+      .post(`${API}/auth/register`, {
         username: formValue.username,
         password: formValue.password,
         email: formValue.email,

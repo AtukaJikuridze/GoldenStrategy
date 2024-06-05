@@ -1,4 +1,4 @@
-import helpBottles from "../../assets/HelpBottles.svg";
+import helpBottles from "../../../assets/HelpBottles.svg";
 export default function Help() {
   return (
     <div>

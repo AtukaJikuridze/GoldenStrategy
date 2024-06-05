@@ -13,8 +13,6 @@ export default function TopRankLeaderboard(props: {
   setIsRankLeaderboardActive: Function;
   leaderBoardInfo: any;
 }) {
-  console.log(props.leaderBoardInfo);
-
   return (
     <div
       className={`bg-bgBlackTransparent w-full h-full fixed left-0 top-0 transition-all   ${
@@ -59,73 +57,8 @@ export default function TopRankLeaderboard(props: {
           </div>
         </div>
 
-        {props.leaderBoardInfo?.map((e: userInfoInterface) => (
-          <div className="flex justify-between mb-8  ">
-            <div className="flex flex-col items-center  w-[33%]">
-              <img src={user} alt="" />
-            </div>
-            <div className="flex flex-col items-center w-[33%]">
-              <p> {e.username}1</p>
-            </div>
-            <div className="flex flex-col items-center w-[33%]">
-              <p> {e.coin}</p>
-            </div>
-          </div>
-        ))}
-        {props.leaderBoardInfo?.map((e: userInfoInterface) => (
-          <div className="flex justify-between mb-8  ">
-            <div className="flex flex-col items-center  w-[33%]">
-              <img src={user} alt="" />
-            </div>
-            <div className="flex flex-col items-center w-[33%]">
-              <p> {e.username}1</p>
-            </div>
-            <div className="flex flex-col items-center w-[33%]">
-              <p> {e.coin}</p>
-            </div>
-          </div>
-        ))}
-        {props.leaderBoardInfo?.map((e: userInfoInterface) => (
-          <div className="flex justify-between mb-8  ">
-            <div className="flex flex-col items-center  w-[33%]">
-              <img src={user} alt="" />
-            </div>
-            <div className="flex flex-col items-center w-[33%]">
-              <p> {e.username}1</p>
-            </div>
-            <div className="flex flex-col items-center w-[33%]">
-              <p> {e.coin}</p>
-            </div>
-          </div>
-        ))}
-        {props.leaderBoardInfo?.map((e: userInfoInterface) => (
-          <div className="flex justify-between mb-8  ">
-            <div className="flex flex-col items-center  w-[33%]">
-              <img src={user} alt="" />
-            </div>
-            <div className="flex flex-col items-center w-[33%]">
-              <p> {e.username}1</p>
-            </div>
-            <div className="flex flex-col items-center w-[33%]">
-              <p> {e.coin}</p>
-            </div>
-          </div>
-        ))}
-        {props.leaderBoardInfo?.map((e: userInfoInterface) => (
-          <div className="flex justify-between mb-8  ">
-            <div className="flex flex-col items-center  w-[33%]">
-              <img src={user} alt="" />
-            </div>
-            <div className="flex flex-col items-center w-[33%]">
-              <p> {e.username}1</p>
-            </div>
-            <div className="flex flex-col items-center w-[33%]">
-              <p> {e.coin}</p>
-            </div>
-          </div>
-        ))}
-        {props.leaderBoardInfo?.map((e: userInfoInterface) => (
-          <div className="flex justify-between mb-8  ">
+        {props.leaderBoardInfo?.map((e: userInfoInterface, i: number) => (
+          <div className="flex justify-between mb-8" key={i}>
             <div className="flex flex-col items-center  w-[33%]">
               <img src={user} alt="" />
             </div>

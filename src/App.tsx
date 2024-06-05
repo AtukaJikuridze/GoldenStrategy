@@ -7,11 +7,11 @@ import Game from "./pages/Game/Game";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App flex flex-col gap-32">
       <Navbar />
       <Game />
-      {/* <RegistrationPage /> */}
-      {/* <Dashboard /> */}
+      <RegistrationPage />
+      <Dashboard />
     </div>
   );
 }

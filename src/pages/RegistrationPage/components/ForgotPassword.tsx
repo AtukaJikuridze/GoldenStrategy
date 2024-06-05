@@ -43,7 +43,7 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
     setButtonClickTimeout(true);
 
     axios
-      .post(`${API}/api/auth/forgotpassword`, {
+      .post(`${API}/auth/forgotpassword`, {
         email: emailAdress,
       })
       .then((res) => {
@@ -67,7 +67,7 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
     e.preventDefault();
 
     axios
-      .put(`${API}/api/auth/forgotpassword`, {
+      .put(`${API}/auth/forgotpassword`, {
         verificationCode,
         newPassword,
       })

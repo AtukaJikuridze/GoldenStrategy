@@ -34,9 +34,9 @@ interface userInterface {
   username: string;
   verificationnumber: number | null;
   verifyed: string;
-  x1_5_coin: string;
+  x1_5_coin: number;
   x1_25_coin: number;
-  x2_coin: string;
+  x2_coin: number;
   x_card_with_coin: number;
   x_card_with_money: number;
 }
@@ -48,7 +48,6 @@ export interface tranasctionsInterface {
 }
 
 export const MyContextProvider = ({ children }: any) => {
-  
   const [userTransactions, setUserTransactions] =
     useState<null | tranasctionsInterface>(null);
 

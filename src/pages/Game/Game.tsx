@@ -1,4 +1,4 @@
-import InGame from "./InGame";
+import InGame from "./components/InGame";
 
 export default function Game() {
   return (

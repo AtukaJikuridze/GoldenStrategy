@@ -14,7 +14,8 @@ interface loginTypes {
 export default function SignUp() {
   const context = useContext(MyContext);
 
-  const [userTOKEN, setUserTOKEN] = useState(""); // useris tokeni getidan modis
+  const [userTOKEN, setUserTOKEN] = useState("satestod mere washale"); // useris tokeni getidan modis
+
   const [inputValues, setInputValues] = useState({
     usernameOrEmail: "",
     password: "",
@@ -28,7 +29,7 @@ export default function SignUp() {
 
   useEffect(() => {
     loginInfo.isVerifyed === null &&
-      axios.post(`${API}/api/auth/register/verify`, {
+      axios.post(`${API}/auth/register/verify`, {
         email: loginInfo.userEmail,
       });
   }, [loginInfo.isVerifyed]);
@@ -36,7 +37,9 @@ export default function SignUp() {
   useEffect(() => {
     userTOKEN &&
       axios
-        .get(`${API}/api/users/${userTOKEN}`)
+        .get(
+          `${API}/users/${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF2dG8iLCJpYXQiOjE3MTc1ODgxMDV9.fRvaPKtnOHsKG6l9CC8nzEZIcTJhyKLNaKsnUNNBq98"}`
+        )
         .then((res) => {
           setLoginInfo({
             isVerifyed: res.data.verifyed,
@@ -54,7 +57,7 @@ export default function SignUp() {
   const loginSubmit = (e: any) => {
     e.preventDefault();
     axios
-      .post(`${API}/api/auth/login`, {
+      .post(`${API}/auth/login`, {
         usernameOrEmail: inputValues.usernameOrEmail,
         password: inputValues.password,
       })
