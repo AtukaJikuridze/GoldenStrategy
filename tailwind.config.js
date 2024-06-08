@@ -18,6 +18,14 @@ export default {
       fontFamily: {
         interM: ["interMedium"],
       },
+      screens: {
+        "3xl": { max: "1700px" },
+        "2xl": { max: "1400px" },
+        xl: { max: "1068px" },
+        lg: { max: "992px" },
+        md: { max: "771px" },
+        sm: { max: "590px" },
+      },
     },
   },
   plugins: [],

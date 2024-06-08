@@ -104,7 +104,7 @@ export default function Question() {
           .catch((error) => {
             console.log(error);
           })
-      : true;
+      : null;
 
     // setAnswer(myAnswer ? myAnswer : null);]
     console.log(useX);
