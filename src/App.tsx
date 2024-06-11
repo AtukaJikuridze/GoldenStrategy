@@ -9,9 +9,9 @@ function App() {
   return (
     <div className="App lg:pt-32">
       <Navbar />
-      {/* <Game /> */}
+      <Game />
       {/* <RegistrationPage /> */}
-      {/* <Dashboard /> */}
+      <Dashboard />
     </div>
   );
 }

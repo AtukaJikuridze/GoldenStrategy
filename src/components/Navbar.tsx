@@ -26,7 +26,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`myContainer flex justify-between items-center transition-all duration-300  h-24 my-8 lg:fixed lg:top-0 left-[50%] lg:-translate-x-1/2 lg:flex-col lg:gap-4 lg:justify-normal lg:bg-cardBgBlack lg:w-[50%] md:!w-[100%] lg:overflow-hidden ${
+      className={`myContainer flex justify-between items-center transition-all duration-300  h-24 my-8 lg:z-10 lg:fixed lg:top-0 left-[50%] lg:-translate-x-1/2 lg:flex-col lg:gap-4 lg:justify-normal lg:bg-cardBgBlack lg:w-[100%] md:!w-[100%] lg:overflow-hidden  ${
         isOpen ? "h-[480px]" : ""
       } `}
     >
