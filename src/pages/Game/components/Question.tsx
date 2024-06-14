@@ -4,15 +4,9 @@ import axios from "axios";
 import { API } from "../../../baseAPI";
 import AfterAnswer from "./AfterAnswer";
 import NoMoreHp from "./NoMoreHp";
+import Help from "./Help";
 
 export default function Question() {
-  interface Coin {
-    quantity: number;
-    x2_coin?: number;
-    x1_5_coin?: number;
-    x1_25_coin?: number;
-  }
-
   interface QuestionInfo {
     question_id: number;
     question: string;
@@ -29,30 +23,35 @@ export default function Question() {
   const [showCoinPopup, setShowCoinPopup] = useState<boolean>(false);
   const [useX, setUseX] = useState<string | null>(null);
   const [questionMessage, setQuestionMessage] = useState<string>("");
+  const [usingHelp, setUsingHelp] = useState<boolean | null>(null); // tu iyenebs helps 2 savaraudo pasuxi mouva
 
   useEffect(() => {
-    axios
-      .post(`${API}/questions/active`, {
-        user_id: 65,
-        usingHelp: 0,
-        language: "EN",
-      })
-      .then((response: any) => {
-        const { avaialbe_x_coins, ...rest } = response.data;
-        setQuestionInfo(rest);
-        setXCoins(avaialbe_x_coins);
-      })
-      .catch((error) => {
-        if (
-          error.response &&
-          error.response.data ===
-            "Your health is too low to perform any actions."
-        ) {
-          setHasHealth(false);
-        } else {
-          console.error("Error fetching active question:", error);
-        }
-      });
+    if (usingHelp !== null) {
+      console.log(true);
+
+      axios
+        .post(`${API}/questions/active`, {
+          user_id: 64,
+          usingHelp: usingHelp === true ? 1 : 0,
+          language: "EN",
+        })
+        .then((response: any) => {
+          const { avaialbe_x_coins, ...rest } = response.data;
+          setQuestionInfo(rest);
+          setXCoins(avaialbe_x_coins);
+        })
+        .catch((error) => {
+          if (
+            error.response &&
+            error.response.data ===
+              "Your health is too low to perform any actions."
+          ) {
+            setHasHealth(false);
+          } else {
+            console.error("Error fetching active question:", error);
+          }
+        });
+    }
   }, [questionQuantity]);
 
   useEffect(() => {
@@ -70,7 +69,7 @@ export default function Question() {
     const answerPayload = {
       question_id: questionInfo?.question_id,
       answer: myAnswer || answerForX,
-      user_id: 65,
+      user_id: 64,
       time: 40,
       use_x: useX || 0,
       language: "EN",
@@ -127,6 +126,11 @@ export default function Question() {
             ))}
           </div>
         </div>
+      ) : usingHelp === null ? (
+        <Help
+          setUsingHelp={setUsingHelp}
+          setQuestionQuantity={setQuestionQuantity}
+        />
       ) : (
         <>
           <div className="flex relative gap-2 items-center justify-center">
