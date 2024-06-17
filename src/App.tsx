@@ -4,14 +4,16 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import Navbar from "./components/Navbar";
 import Game from "./pages/Game/Game";
+import Shop from "./pages/Shop/Shop";
 
 function App() {
   return (
     <div className="App lg:pt-32">
       <Navbar />
-      <Game />
+      <Shop />
+      {/* <Game /> */}
       {/* <RegistrationPage /> */}
-      <Dashboard />
+      {/* <Dashboard /> */}
     </div>
   );
 }

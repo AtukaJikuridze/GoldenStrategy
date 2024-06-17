@@ -26,6 +26,11 @@ export default function Question() {
   const [usingHelp, setUsingHelp] = useState<boolean | null>(null); // tu iyenebs helps 2 savaraudo pasuxi mouva
 
   useEffect(() => {
+    // axios
+    //   .post(`${API}/users/delete-seen-questions`, {
+    //     email: "atukajiquridze@gmail.com",
+    //   })
+    //   .then((res) => console.log(res));
     if (usingHelp !== null) {
       console.log(true);
 
@@ -39,8 +44,11 @@ export default function Question() {
           const { avaialbe_x_coins, ...rest } = response.data;
           setQuestionInfo(rest);
           setXCoins(avaialbe_x_coins);
+          console.log(response);
         })
         .catch((error) => {
+          console.log(error);
+
           if (
             error.response &&
             error.response.data ===
@@ -52,6 +60,8 @@ export default function Question() {
           }
         });
     }
+    console.log(showCoinPopup);
+    console.log(xCoins);
   }, [questionQuantity]);
 
   useEffect(() => {
@@ -61,8 +71,9 @@ export default function Question() {
   }, [useX]);
 
   const confirmAnswer = (myAnswer?: string) => {
-    if (xCoins && !useX) {
+    if (xCoins?.length && !useX) {
       setShowCoinPopup(true);
+
       return;
     }
 
@@ -108,6 +119,7 @@ export default function Question() {
             nextQuestion={nextQuestion}
             answer={answer}
             questionMessage={questionMessage}
+            setUsingHelp={setUsingHelp}
           />
         </>
       ) : showCoinPopup ? (

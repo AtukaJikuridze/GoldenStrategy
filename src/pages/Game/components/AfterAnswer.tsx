@@ -2,11 +2,13 @@ interface afterAnswerInterface {
   nextQuestion: Function;
   answer: string;
   questionMessage: string;
+  setUsingHelp: Function;
 }
 export default function AfterAnswer({
   nextQuestion,
   answer,
   questionMessage,
+  setUsingHelp,
 }: afterAnswerInterface) {
   return (
     <div>
@@ -24,7 +26,10 @@ export default function AfterAnswer({
 
             <div
               className="bg-[#DBFF00] text-black rounded-md py-2 px-12 text-sm flex justify-center items-center cursor-pointer"
-              onClick={() => nextQuestion()}
+              onClick={() => {
+                nextQuestion();
+                setUsingHelp(null);
+              }}
             >
               Next Question
             </div>
