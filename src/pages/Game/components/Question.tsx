@@ -23,46 +23,46 @@ export default function Question() {
   const [showCoinPopup, setShowCoinPopup] = useState<boolean>(false);
   const [useX, setUseX] = useState<string | null>(null);
   const [questionMessage, setQuestionMessage] = useState<string>("");
-  const [usingHelp, setUsingHelp] = useState<boolean | null>(null); // tu iyenebs helps 2 savaraudo pasuxi mouva
+  const [usingHelp, setUsingHelp] = useState<boolean | null>(null);
+  const [hasHelp, setHasHelp] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
-    // axios
-    //   .post(`${API}/users/delete-seen-questions`, {
-    //     email: "atukajiquridze@gmail.com",
-    //   })
-    //   .then((res) => console.log(res));
     if (usingHelp !== null) {
-      console.log(true);
-
       axios
         .post(`${API}/questions/active`, {
           user_id: 64,
-          usingHelp: usingHelp === true ? 1 : 0,
+          usingHelp: usingHelp ? 1 : 0,
           language: "EN",
         })
         .then((response: any) => {
           const { avaialbe_x_coins, ...rest } = response.data;
           setQuestionInfo(rest);
           setXCoins(avaialbe_x_coins);
-          console.log(response);
+          setErrorMessage("");
         })
         .catch((error) => {
-          console.log(error);
-
           if (
+            error.response &&
+            error.response.status === 403 &&
+            error.response.data ===
+              "You don't have enough help points to use help."
+          ) {
+            setHasHelp(false);
+            setErrorMessage("You don't have enough help points to use help.");
+          } else if (
             error.response &&
             error.response.data ===
               "Your health is too low to perform any actions."
           ) {
             setHasHealth(false);
+            setErrorMessage("Your health is too low to perform any actions.");
           } else {
             console.error("Error fetching active question:", error);
           }
         });
     }
-    console.log(showCoinPopup);
-    console.log(xCoins);
-  }, [questionQuantity]);
+  }, [questionQuantity, usingHelp]);
 
   useEffect(() => {
     if (useX !== null) {
@@ -73,7 +73,6 @@ export default function Question() {
   const confirmAnswer = (myAnswer?: string) => {
     if (xCoins?.length && !useX) {
       setShowCoinPopup(true);
-
       return;
     }
 
@@ -120,6 +119,7 @@ export default function Question() {
             answer={answer}
             questionMessage={questionMessage}
             setUsingHelp={setUsingHelp}
+            setHasHelp={setHasHelp}
           />
         </>
       ) : showCoinPopup ? (
@@ -142,37 +142,67 @@ export default function Question() {
         <Help
           setUsingHelp={setUsingHelp}
           setQuestionQuantity={setQuestionQuantity}
+          hasHelp={hasHelp}
+          setHasHelp={setHasHelp}
         />
       ) : (
         <>
-          <div className="flex relative gap-2 items-center justify-center">
-            <img src={timer} alt="Timer" />
-            <p>0:50</p>
-          </div>
-          <div className="w-[500px] max-w-full h-[250px] bg-cardBgBlack flex justify-center items-center p-6 overflow-y-scroll scrollbar-hide rounded-md">
-            <p className="overflow-hidden text-ellipsis break-words text-center">
-              {questionInfo?.question}
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-y-4 gap-x-[2%]">
-            {questionInfo ? (
-              questionInfo.answers?.map((e: string, i: number) => (
-                <div className="w-[49%] flex justify-center" key={i}>
-                  <div
-                    className="cursor-pointer rounded-sm py-3 overflow-hidden text-ellipsis break-words text-center w-[80%] bg-cardBgBlack flex justify-center"
+          {errorMessage ? (
+            <>
+              <div className="w-[500px] max-w-full h-[250px] flex-col bg-cardBgBlack flex justify-center items-center p-6 overflow-y-scroll scrollbar-hide rounded-md">
+                <div className="text-red-500 text-center mb-4">
+                  {errorMessage}
+                </div>
+                <h1>Do You Want to buy ?</h1>
+                <div className="flex gap-10 mt-5">
+                  <button className="text-black bg-yellowButton rounded-lg px-10 py-3">
+                    Yes
+                  </button>
+                  <button
+                    className="text-yellowButton border border-[#282828] overflow-hidden rounded-lg px-10 py-3"
                     onClick={() => {
-                      confirmAnswer(e);
-                      setAnswerForX(e);
+                      setErrorMessage("");
+                      setQuestionQuantity((current: number) => current + 1);
+                      setUsingHelp(false);
                     }}
                   >
-                    <p className="text-sm">{e}</p>
-                  </div>
+                    No
+                  </button>
                 </div>
-              ))
-            ) : (
-              <h1>No questions available</h1>
-            )}
-          </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex relative gap-2 items-center justify-center">
+                <img src={timer} alt="Timer" />
+                <p>0:50</p>
+              </div>
+              <div className="w-[500px] max-w-full h-[250px] bg-cardBgBlack flex justify-center items-center p-6 overflow-y-scroll scrollbar-hide rounded-md">
+                <p className="overflow-hidden text-ellipsis break-words text-center">
+                  {questionInfo?.question}
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-y-4 gap-x-[2%]">
+                {questionInfo ? (
+                  questionInfo.answers?.map((e: string, i: number) => (
+                    <div className="w-[49%] flex justify-center" key={i}>
+                      <div
+                        className="cursor-pointer rounded-sm py-3 overflow-hidden text-ellipsis break-words text-center w-[80%] bg-cardBgBlack flex justify-center"
+                        onClick={() => {
+                          confirmAnswer(e);
+                          setAnswerForX(e);
+                        }}
+                      >
+                        <p className="text-sm">{e}</p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <h1>No questions available</h1>
+                )}
+              </div>
+            </>
+          )}
         </>
       )}
     </div>

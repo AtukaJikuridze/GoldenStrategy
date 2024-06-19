@@ -10,10 +10,10 @@ function App() {
   return (
     <div className="App lg:pt-32">
       <Navbar />
-      <Shop />
-      {/* <Game /> */}
+      {/* <Shop /> */}
+      <Game />
       {/* <RegistrationPage /> */}
-      {/* <Dashboard /> */}
+      <Dashboard />
     </div>
   );
 }

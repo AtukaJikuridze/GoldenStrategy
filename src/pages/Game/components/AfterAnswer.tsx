@@ -3,12 +3,14 @@ interface afterAnswerInterface {
   answer: string;
   questionMessage: string;
   setUsingHelp: Function;
+  setHasHelp: Function;
 }
 export default function AfterAnswer({
   nextQuestion,
   answer,
   questionMessage,
   setUsingHelp,
+  setHasHelp,
 }: afterAnswerInterface) {
   return (
     <div>
@@ -29,6 +31,7 @@ export default function AfterAnswer({
               onClick={() => {
                 nextQuestion();
                 setUsingHelp(null);
+                setHasHelp(true);
               }}
             >
               Next Question
