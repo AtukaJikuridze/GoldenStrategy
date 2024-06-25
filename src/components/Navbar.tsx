@@ -1,28 +1,39 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import user from "../assets/user.svg";
 import bell from "../assets/bell.svg";
 import logout from "../assets/logout.svg";
 import { MyContext } from "../Context/myContext";
+import { Link, useLocation, useParams } from "react-router-dom";
 export default function Navbar() {
   const context = useContext(MyContext);
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const { pathname } = useLocation();
 
   const links = [
     {
       title: "Dashboard",
-      linkTo: "",
+      linkTo: "/GoldenStrategy/Dashboard",
     },
     {
       title: "FAQ",
-      linkTo: "",
+      linkTo: "/GoldenStrategy/FAQ",
     },
     {
       title: "Shop",
-      linkTo: "",
+      linkTo: "/GoldenStrategy/Shop",
     },
   ];
 
-  const [activeLink, setActiveLink] = useState<number>(0);
+  const [activeLink, setActiveLink] = useState<number>();
+
+  useEffect(() => {
+    const lastSlashIndex = pathname.lastIndexOf("/");
+    if (lastSlashIndex !== -1) {
+      const lastSegment = pathname.substring(lastSlashIndex + 1);
+      setActiveLink(links.findIndex((e) => e.title === lastSegment));
+    }
+  }, [pathname]);
 
   return (
     <nav
@@ -37,7 +48,7 @@ export default function Navbar() {
       <div className="bg-cardBgBlack py-5 px-8 rounded-xl flex items-center gap-5  order-1 lg:gap-12">
         <div className="flex items-center gap-5">
           <img src={user} alt="" />
-          <p className="text-sm">{context?.userInfo?.username}Hellokitty</p>
+          <p className="text-sm">{context?.userInfo?.username}</p>
         </div>
 
         <button
@@ -56,21 +67,22 @@ export default function Navbar() {
         <div>
           <ul className="flex gap-10 h-full items-center lg:flex-col ">
             {links.map((e, i) => (
-              <li
-                key={i}
-                className={`cursor-pointer transition-all relative h-full flex justify-center items-center sm:text-sm  ${
-                  activeLink === i ? "text-white" : "text-gray-400"
-                } `}
-                onClick={() => setActiveLink(i)}
-              >
-                {e.title}
+              <Link to={e.linkTo} className="h-full" key={i}>
+                <li
+                  className={`cursor-pointer transition-all relative h-full flex justify-center items-center sm:text-sm  ${
+                    activeLink === i ? "text-white" : "text-gray-400"
+                  } `}
+                  onClick={() => setActiveLink(i)}
+                >
+                  {e.title}
 
-                <div
-                  className={`${
-                    activeLink === i ? "opacity-100" : "opacity-0"
-                  } border-b w-full border-[2px] transition-all rounded-xl absolute bottom-0 left-0 border-yellowButton `}
-                ></div>
-              </li>
+                  <div
+                    className={`${
+                      activeLink === i ? "opacity-100" : "opacity-0"
+                    } border-b w-full border-[2px] transition-all rounded-xl absolute bottom-0 left-0 border-yellowButton `}
+                  ></div>
+                </li>
+              </Link>
             ))}
           </ul>
         </div>
@@ -80,7 +92,15 @@ export default function Navbar() {
             alt="notifications"
             className="cursor-pointer sm:w-5"
           />
-          <img src={logout} alt="logout" className="cursor-pointer sm:w-5" />
+          <img
+            src={logout}
+            alt="logout"
+            className="cursor-pointer sm:w-5"
+            onClick={() => {
+              localStorage.removeItem("Token");
+              window.location.reload();
+            }}
+          />
         </div>
       </div>
     </nav>

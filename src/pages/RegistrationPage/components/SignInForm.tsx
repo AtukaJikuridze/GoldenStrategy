@@ -29,18 +29,18 @@ export default function SignInForm({
           value={inputValues.usernameOrEmail}
           type="text"
           name="usernameOrEmail"
-          className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
+          className="w-[470px] xl:w-full h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
         />
       </label>
       <label>
         <p className="mb-2 mx-0.5">Password</p>
-        <div className="relative ">
+        <div style={{ zIndex: 0, position: "relative" }}>
           <input
             name="password"
             onChange={handleInput}
             value={inputValues.password}
             type={showPassword ? "text" : "password"}
-            className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
+            className="w-[470px] xl:w-full h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent "
           />
           {showPassword ? (
             <FaEye

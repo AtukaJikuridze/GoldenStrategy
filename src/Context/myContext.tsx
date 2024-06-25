@@ -4,6 +4,8 @@ export const MyContext = createContext<ContextInterface | undefined>(undefined);
 interface ContextInterface {
   userInfo: userInterface | null;
   userTransactions: tranasctionsInterface | null;
+  isLoggined: boolean;
+  setIsLoggined: Function;
   setUserInfo: Function;
   setUserTransactions: Function;
 }
@@ -52,10 +54,20 @@ export const MyContextProvider = ({ children }: any) => {
     useState<null | tranasctionsInterface>(null);
 
   const [userInfo, setUserInfo] = useState<null | userInterface>(null);
+  const [isLoggined, setIsLoggined] = useState<boolean>(
+    localStorage.getItem("Token") ? true : false
+  );
 
   return (
     <MyContext.Provider
-      value={{ userInfo, setUserInfo, setUserTransactions, userTransactions }}
+      value={{
+        userInfo,
+        setUserInfo,
+        setUserTransactions,
+        userTransactions,
+        isLoggined,
+        setIsLoggined,
+      }}
     >
       {children}
     </MyContext.Provider>

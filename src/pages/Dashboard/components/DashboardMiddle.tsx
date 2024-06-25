@@ -7,6 +7,7 @@ import TransactionDetails from "./TransactionDetails";
 import TopRankLeaderboard from "./TopRankLeaderboard";
 import axios from "axios";
 import { API } from "../../../baseAPI";
+import { Link } from "react-router-dom";
 
 export default function DashboardMiddle() {
   const context = useContext(MyContext);
@@ -44,7 +45,10 @@ export default function DashboardMiddle() {
       <div className="flex my-14 justify-between">
         <div className="bg-cardBgBlack flex justify-between pr-32 w-[70%] rounded-xl items-center">
           <img src={dComp4} alt="" />
-          <h1 className="text-3xl cursor-pointer">PLAY GAME</h1>
+          <Link to={"/GoldenStrategy/Game"}>
+            {" "}
+            <h1 className="text-3xl cursor-pointer">PLAY GAME</h1>
+          </Link>
         </div>
         <div className="flex bg-cardBgBlack  items-center rounded-xl">
           <img src={dComp5} alt="Question" width={158} />

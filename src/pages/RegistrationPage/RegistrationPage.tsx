@@ -1,15 +1,25 @@
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RegistrationLeftside from "./components/RegistrationLeftside";
+import { MyContext } from "../../Context/myContext";
+import { useNavigate } from "react-router";
 
 export default function RegistrationPage() {
+  const navigate = useNavigate();
+  const context = useContext(MyContext);
+  useEffect(() => {
+    if (context?.isLoggined) {
+      navigate("/GoldenStrategy/Dashboard");
+    }
+  }, []);
+
   const [isLogging, setIsLogging] = useState(true); // თუ isLoggging არის True რეგისტრაციის ფეიჯზე გამოიტანს Login პანელს თუარადა Sign Up ის
 
   return (
-    <div className="relative p-16 h-full  ">
+    <div className="relative p-16 h-full xl:px-16 xl:py-0 ">
       {/* <SelectLanguage /> */}
-      <main className="py-[80px] text-white flex justify-around items-center h-full relative">
+      <main className="py-[80px] text-white flex justify-around items-center h-full relative xl:flex-wrap gap-32">
         <RegistrationLeftside
           isLogging={isLogging}
           setIsLogging={setIsLogging}
