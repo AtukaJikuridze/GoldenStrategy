@@ -19,8 +19,9 @@ export default {
         interM: ["interMedium"],
       },
       screens: {
-        "3xl": { max: "1700px" },
-        "2xl": { max: "1400px" },
+        "4xl": { max: "1800px" },
+        "3xl": { max: "1400px" },
+        "2xl": { max: "1200px" },
         xl: { max: "1068px" },
         lg: { max: "992px" },
         md: { max: "771px" },

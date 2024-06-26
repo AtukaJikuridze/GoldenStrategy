@@ -6,7 +6,6 @@ import AfterAnswer from "./AfterAnswer";
 import NoMoreHp from "./NoMoreHp";
 import Help from "./Help";
 import { MyContext } from "../../../Context/myContext";
-import { Link } from "react-router-dom";
 import AnswerList from "./AnswerList";
 import SeenAllQuestions from "./SeenAllQuestions";
 
@@ -205,18 +204,16 @@ export default function Question() {
 
               {questionInfo ? (
                 <>
-                  
-                    {questionInfo ? (
-                      <AnswerList
-                        questionInfo={questionInfo}
-                        confirmAnswer={confirmAnswer}
-                        setAnswerForX={setAnswerForX}
-                        questionResponsed={questionResponsed}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  
+                  {questionInfo ? (
+                    <AnswerList
+                      questionInfo={questionInfo}
+                      confirmAnswer={confirmAnswer}
+                      setAnswerForX={setAnswerForX}
+                      questionResponsed={questionResponsed}
+                    />
+                  ) : (
+                    ""
+                  )}
                 </>
               ) : (
                 <SeenAllQuestions questionResponsed={questionResponsed} />

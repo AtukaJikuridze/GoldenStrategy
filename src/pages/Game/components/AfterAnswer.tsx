@@ -18,12 +18,12 @@ export default function AfterAnswer({
     <div>
       {questionMessage ? (
         <>
-          <div className="w-[500px] max-w-full h-[250px] bg-cardBgBlack border-[#DBFF00] border flex justify-center items-center p-6 overflow-y-scroll scrollbar-hide rounded-md">
+          <div className="w-[500px] sm:w-full h-[250px] bg-cardBgBlack border-[#DBFF00] border flex justify-center items-center p-6 overflow-y-scroll scrollbar-hide rounded-md">
             <p className="overflow-hidden text-ellipsis break-words text-center">
               {questionMessage}
             </p>
           </div>
-          <div className="flex justify-between mt-5">
+          <div className="flex justify-between mt-5 sm:gap-5">
             <div className="bg-[#DBFF00] text-black rounded-md py-2 px-12 flex justify-center items-center">
               {answer}
             </div>

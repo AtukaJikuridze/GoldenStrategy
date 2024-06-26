@@ -18,7 +18,7 @@ export default function Help(props: {
 
   return (
     <div>
-      <div className="bg-cardBgBlack rounded-lg p-10 flex justify-center items-center w-[500px] h-[250px] mb-8">
+      <div className="bg-cardBgBlack rounded-lg p-10 flex justify-center items-center w-[500px] sm:w-full h-[250px] mb-8">
         <p className="text-lg">Do you want to use help?</p>
         <img className="absolute" src={helpBottles} alt="Help Bottles" />
       </div>

@@ -37,7 +37,7 @@ function App() {
   }, [context?.isLoggined]);
 
   return (
-    <div className="App lg:pt-32">
+    <div className={`App ${context?.isLoggined ? "lg:pt-32" : ""}`}>
       {context?.isLoggined ? <Navbar /> : ""}
       {/* <Shop /> */}
       {/* <Game /> */}

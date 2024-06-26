@@ -17,9 +17,9 @@ export default function RegistrationPage() {
   const [isLogging, setIsLogging] = useState(true); // თუ isLoggging არის True რეგისტრაციის ფეიჯზე გამოიტანს Login პანელს თუარადა Sign Up ის
 
   return (
-    <div className="relative p-16 h-full xl:px-16 xl:py-0 ">
+    <div className="relative p-16 h-full xl:px-5 xl:py-0  2xl:myContainer">
       {/* <SelectLanguage /> */}
-      <main className="py-[80px] text-white flex justify-around items-center h-full relative xl:flex-wrap gap-32">
+      <main className="py-[80px] text-white flex justify-around items-center h-full relative 2xl:flex-wrap gap-32 lg:gap-16">
         <RegistrationLeftside
           isLogging={isLogging}
           setIsLogging={setIsLogging}

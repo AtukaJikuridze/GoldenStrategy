@@ -85,7 +85,7 @@ export default function SignUp() {
   };
 
   return !forgotPassword ? (
-    <div className="flex flex-col justify-center items-center gap-5">
+    <div className="flex flex-col justify-center items-center gap-5 xl:w-full ">
       {errorMessage && (
         <div className="bg-bgBlackTransparent w-full h-[100%] fixed  left-0 top-0 flex items-center justify-center z-[1000]">
           <div className="bg-cardBgBlack p-5 rounded-lg shadow-lg relative h-[300px] w-[500px] lg:w-[80%] lg:h-[40%]">
@@ -126,7 +126,7 @@ export default function SignUp() {
             handleInput={handleInput}
             inputValues={inputValues}
           />
-          <div className="flex gap-5 mt-14">
+          <div className="flex gap-5 mt-14 lg:mb-14">
             <p className="cursor-pointer">Privacy Policy</p>
             <p className="cursor-pointer">FAQ</p>
             <p className="cursor-pointer">Contact Us</p>

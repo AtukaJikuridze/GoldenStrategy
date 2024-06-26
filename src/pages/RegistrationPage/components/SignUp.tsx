@@ -33,16 +33,19 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-5 ">
+    <div className="flex flex-col justify-center items-center gap-5 xl:w-full ">
       <h1 className="text-2xl">Sign Up</h1>
       <p>Enter Your Infromation</p>
-      <form className="flex flex-col gap-5" onSubmit={handleFormsubmit}>
+      <form
+        className="flex flex-col gap-5 lg:w-full"
+        onSubmit={handleFormsubmit}
+      >
         <label>
           <p className="mb-2 mx-0.5">UserName</p>
           <input
             name="username"
             type="text"
-            className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
+            className="w-[470px] lg:w-[100%] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
             onChange={handleInput}
             value={formValue.username}
             required
@@ -53,7 +56,7 @@ export default function SignUp() {
           <input
             name="name"
             type="text"
-            className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
+            className="w-[470px] lg:w-[100%] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
             onChange={handleInput}
             value={formValue.name}
             required
@@ -64,7 +67,7 @@ export default function SignUp() {
           <input
             name="email"
             type="text"
-            className="w-[470px] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
+            className="w-[470px] lg:w-[100%] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
             onChange={handleInput}
             value={formValue.email}
             required
@@ -76,7 +79,7 @@ export default function SignUp() {
             <input
               name="password"
               type={showPassword ? "text" : "password"}
-              className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
+              className="w-[470px] lg:w-[100%] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
               onChange={handleInput}
               value={formValue.password}
               required
@@ -96,12 +99,12 @@ export default function SignUp() {
           </div>
         </label>
         <input
-          className="w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5 outline-none cursor-pointer hover:bg-yellowButtonHover transition-all"
+          className="w-[470px] lg:w-[100%] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5 outline-none cursor-pointer hover:bg-yellowButtonHover transition-all"
           value={"SIGN UP"}
           type="submit"
         />
       </form>
-      <div className="flex gap-5 mt-14">
+      <div className="flex gap-5 mt-14 lg:mb-14">
         <p>Privacy Policy</p>
         <p>FAQ</p>
         <p>Contact Us</p>

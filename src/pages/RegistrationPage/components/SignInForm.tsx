@@ -21,7 +21,7 @@ export default function SignInForm({
   setForgotPassword,
 }: formTypes) {
   return (
-    <form className="flex flex-col gap-5" onSubmit={loginSubmit}>
+    <form className="flex flex-col gap-5 xl:w-full " onSubmit={loginSubmit}>
       <label>
         <p className="mb-2 mx-0.5">UserName</p>
         <input
@@ -29,7 +29,7 @@ export default function SignInForm({
           value={inputValues.usernameOrEmail}
           type="text"
           name="usernameOrEmail"
-          className="w-[470px] xl:w-full h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
+          className="w-[470px] xl:w-[100%] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
         />
       </label>
       <label>
@@ -40,7 +40,7 @@ export default function SignInForm({
             onChange={handleInput}
             value={inputValues.password}
             type={showPassword ? "text" : "password"}
-            className="w-[470px] xl:w-full h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent "
+            className="w-[470px] xl:w-[100%] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent "
           />
           {showPassword ? (
             <FaEye
@@ -61,7 +61,7 @@ export default function SignInForm({
       <input
         value={"SIGN IN"}
         type="submit"
-        className="text-center cursor-pointer w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5 hover:bg-yellowButtonHover transition-all"
+        className="text-center cursor-pointer w-[470px] xl:w-[100%] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5 hover:bg-yellowButtonHover transition-all"
       />
     </form>
   );

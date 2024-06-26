@@ -42,48 +42,48 @@ export default function DashboardMiddle() {
         leaderBoardInfo={leaderboardInfo}
       />
 
-      <div className="flex my-14 justify-between">
-        <div className="bg-cardBgBlack flex justify-between pr-32 w-[70%] rounded-xl items-center">
+      <div className="flex my-14 justify-between sm:flex-col sm:gap-10">
+        <div className="bg-cardBgBlack flex justify-between pr-32 w-[70%] rounded-xl items-center 3xl:pr-12 3xl:w-[65%] 2xl:!w-full 2xl:mr-5 lg:flex-col lg:gap-10 lg:pb-10 lg:!px-4 ">
           <img src={dComp4} alt="" />
           <Link to={"/GoldenStrategy/Game"}>
             {" "}
             <h1 className="text-3xl cursor-pointer">PLAY GAME</h1>
           </Link>
         </div>
-        <div className="flex bg-cardBgBlack  items-center rounded-xl">
+        <div className="flex bg-cardBgBlack  items-center rounded-xl 2xl:flex-col 2xl:justify-center 2xl:text-center 2xl:pb-4">
           <img src={dComp5} alt="Question" width={158} />
           <p className="w-32 text-sm">History Of Questions</p>
         </div>
       </div>
       <div className=" bg-cardBgBlack p-5 rounded-xl">
         <p className="text-center mb-12 text-xl">Transaction Details</p>
-        <div className="flex justify-around items-center">
+        <div className="flex justify-around items-top  ">
           <div className="">
             <div className="flex flex-col items-center gap-3">
-              <p>Transaction</p>
+              <p className="md:text-[10px]">Transaction</p>
               <div className="border border-yellowButton w-10"></div>
             </div>
-            <div className="flex items-center mt-10 flex-col gap-5">
-              <p className=" capitalize">
+            <div className="flex items-center mt-10 flex-col gap-5 md:text-[12px]">
+              <p className=" capitalize md:truncate md:w-[40px]">
                 {lastTransactions ? lastTransactions[0].trasaction_info : ""}
               </p>
-              <p className="opacity-10 capitalize">
+              <p className="opacity-10 capitalize md:truncate md:w-[40px]">
                 {lastTransactions ? lastTransactions[1].trasaction_info : ""}
               </p>
-              <p className="opacity-10 capitalize">
+              <p className="opacity-10 capitalize md:truncate md:w-[40px]">
                 {lastTransactions ? lastTransactions[2].trasaction_info : ""}
               </p>
             </div>
           </div>
           <div className="">
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center gap-3 md:text-[12px] ">
               <p>Amount</p>
               <div className="border border-yellowButton w-10"></div>
             </div>
-            <div className="flex items-center my-8 flex-col gap-5">
+            <div className="flex items-center my-8 flex-col gap-5 md:text-[12px]">
               <p>{lastTransactions ? lastTransactions[2].amount : ""}$</p>
               <p
-                className="text-2xl cursor-pointer"
+                className="text-2xl cursor-pointer md:text-sm"
                 onClick={() => setIsTransactionDetailsActive(true)}
               >
                 Details
@@ -91,16 +91,18 @@ export default function DashboardMiddle() {
             </div>
           </div>
           <div className="">
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center gap-3 md:text-[12px]">
               <p>Date</p>
               <div className="border border-yellowButton w-10"></div>
             </div>
-            <div className="flex items-center mt-10 flex-col gap-5">
-              <p>{lastTransactions ? lastTransactions[0].date : ""}</p>
-              <p className="opacity-10">
+            <div className="flex items-center mt-10 flex-col gap-5 md:text-[12px]">
+              <p className=" md:truncate md:w-[40px]">
+                {lastTransactions ? lastTransactions[0].date : ""}
+              </p>
+              <p className="opacity-10 md:truncate md:w-[40px] ">
                 {lastTransactions ? lastTransactions[1].date : ""}
               </p>
-              <p className="opacity-10">
+              <p className="opacity-10 md:truncate md:w-[40px] ">
                 {lastTransactions ? lastTransactions[2].date : ""}
               </p>
             </div>
