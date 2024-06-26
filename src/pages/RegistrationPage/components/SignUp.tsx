@@ -2,8 +2,17 @@ import axios from "axios";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { API } from "../../../baseAPI";
+import InputMessageComp from "../../../components/InputMessage";
 
-export default function SignUp() {
+export default function SignUp(props: { setIsLogging: Function }) {
+  interface submitInfoInterface {
+    messageColor: boolean | undefined;
+    message: string;
+  }
+  const [submitInfo, setSubmitInfo] = useState<any>({
+    messageColorBoolean: undefined,
+    message: "",
+  });
   const [formValue, setFormValue] = useState({
     username: "",
     name: "",
@@ -26,8 +35,22 @@ export default function SignUp() {
         name: formValue.name,
         avatar: 5,
       })
-      .then((res: object) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res: any) => {
+        setSubmitInfo({
+          messageColorBoolean: true,
+          message: res.data,
+        });
+        setTimeout(() => {
+          props.setIsLogging(true);
+        }, 1500);
+      })
+      .catch((err) => {
+        setSubmitInfo({
+          messageColorBoolean: false,
+          message: err.response.data,
+        });
+        console.log(err);
+      });
   };
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -98,6 +121,16 @@ export default function SignUp() {
             )}
           </div>
         </label>
+        {submitInfo.messageColorBoolean !== undefined && (
+          <InputMessageComp
+            boolean={submitInfo.messageColorBoolean}
+            message={
+              submitInfo.messageColorBoolean
+                ? "Account Created Succesfully"
+                : submitInfo.message
+            }
+          />
+        )}
         <input
           className="w-[470px] lg:w-[100%] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5 outline-none cursor-pointer hover:bg-yellowButtonHover transition-all"
           value={"SIGN UP"}

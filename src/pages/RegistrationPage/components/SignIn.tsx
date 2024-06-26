@@ -34,6 +34,7 @@ export default function SignUp() {
 
   useEffect(() => {
     if (isUserVerifyed === null) {
+      console.log(loginInfo);
       axios.post(`${API}/auth/register/verify`, {
         email: loginInfo.userEmail,
       });
@@ -42,16 +43,15 @@ export default function SignUp() {
 
   useEffect(() => {
     if (userTOKEN) {
-      axios
-        .get(
-          `${API}/users/${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF2dG8iLCJpYXQiOjE3MTc1ODgxMDV9.fRvaPKtnOHsKG6l9CC8nzEZIcTJhyKLNaKsnUNNBq98"}`
-        )
-        .then((res) => {
-          setLoginInfo({
-            userEmail: res.data.email,
-          });
-          context?.setUserInfo(res);
-        });
+      console.log(userTOKEN);
+      axios.get(`${API}/users/${userTOKEN}`).then((res) => {
+        // setLoginInfo({
+        //   userEmail: res.data.userData.email,
+        // });
+        console.log(res);
+
+        context?.setUserInfo(res);
+      });
     }
   }, [userTOKEN]);
 
@@ -68,16 +68,15 @@ export default function SignUp() {
         password: inputValues.password,
       })
       .then((res) => {
-        console.log(res.data);
+        setUserTOKEN(res.data.token);
 
-        if (res.data === "payment status is not valid") {
+        if (res.data.status === "payment status is not valid") {
           setErrorMessage(
             "თქვენ არ გაქვთ რეგისტრაციის საფასური გადახდილი, მოგვწერეთ Facebook - ფეიჯზე"
           );
-        } else if (res.data === "you are not verifyed") {
+        } else if (res.data.status === "you are not verifyed") {
           SetIsUserVerifyed(null);
         } else {
-          setUserTOKEN(res.data);
           context?.setIsLoggined(true);
           localStorage.setItem("Token", res?.data);
           window.location.reload();

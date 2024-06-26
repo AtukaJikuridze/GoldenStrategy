@@ -24,7 +24,7 @@ export default function RegistrationPage() {
           isLogging={isLogging}
           setIsLogging={setIsLogging}
         />
-        {!isLogging ? <SignUp /> : <SignIn />}
+        {!isLogging ? <SignUp setIsLogging={setIsLogging} /> : <SignIn />}
       </main>
     </div>
   );

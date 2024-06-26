@@ -42,22 +42,15 @@ export default function VerificationPannel(props: { setLoginInfo: Function }) {
           className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
         />
       </div>
-      {submitMessage !== undefined ? (
-        submitMessage ? (
-          <InputMessageComp
-            boolean={submitMessage}
-            message={"Verification Success"}
-          />
-        ) : (
-          <InputMessageComp
-            boolean={
-              submitMessage !== undefined && !submitMessage ? false : true
-            }
-            message={"Verification Code is incorrect"}
-          />
-        )
-      ) : (
-        <></>
+      {submitMessage !== undefined && (
+        <InputMessageComp
+          boolean={submitMessage}
+          message={
+            submitMessage
+              ? "Verification Success"
+              : "Verification Code is incorrect"
+          }
+        />
       )}
 
       <h1
