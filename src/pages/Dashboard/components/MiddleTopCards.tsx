@@ -17,8 +17,14 @@ export default function MiddleTopCards(props: {
         <div className="flex items-center justify-between p-5 bg-cardBgBlack gap-5">
           <img src={creditCard} alt="" className="w-[200px]" />
           <div className="text-center px-5">
-            <p>Total Balance</p>
-            <p className="text-sm my-5">{context?.userInfo?.balance}$</p>
+            <div className="flex justify-center items-center gap-3">
+              <p>Total Balance:</p>
+              <p className="text-sm">{context?.userInfo?.balance}$</p>
+            </div>
+            <div className="flex justify-center items-center gap-3">
+              <p>Aviable Coins:</p>
+              <p className="text-sm my-5 ">{context?.userInfo?.coin}</p>
+            </div>
             <div className="flex gap-5">
               <button className="text-black text-sm bg-yellowButton py-2 rounded-lg w-[150px] text-center">
                 Deposit

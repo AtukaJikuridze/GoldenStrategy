@@ -11,21 +11,28 @@ import { MyContext } from "./Context/myContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "./baseAPI";
+import FAQ from "./pages/FAQ/FAQ";
 
 function App() {
   const navigate = useNavigate();
   const context = useContext(MyContext);
   useEffect(() => {
+    axios
+      .post(`${API}/users/delete-seen-questions`, {
+        email: "atukajiquridze@gmail.com",
+      })
+      .then((res) => console.log(res));
+
     axios.get(`${API}/users/${localStorage.getItem("Token")}`).then((res) => {
       context?.setUserInfo(res.data.userData[0]);
       context?.setUserTransactions(res.data.transactions);
-      console.log(res.data.userData[0]);
     });
   }, []);
   useEffect(() => {
-    console.log(context?.isLoggined);
     if (!context?.isLoggined) {
       navigate("/GoldenStrategy/Login");
+    } else {
+      navigate("/GoldenStrategy/Dashboard");
     }
   }, [context?.isLoggined]);
 
@@ -40,6 +47,7 @@ function App() {
         <Route path="GoldenStrategy/Dashboard" element={<Dashboard />} />
         <Route path="GoldenStrategy/Shop" element={<Shop />} />
         <Route path="GoldenStrategy/Game" element={<Game />} />
+        <Route path="GoldenStrategy/FAQ" element={<FAQ />} />
       </Routes>
     </div>
   );

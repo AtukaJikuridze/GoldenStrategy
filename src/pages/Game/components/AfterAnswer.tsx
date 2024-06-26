@@ -4,6 +4,7 @@ interface afterAnswerInterface {
   questionMessage: string;
   setUsingHelp: Function;
   setHasHelp: Function;
+  setQuestionResponsed: Function;
 }
 export default function AfterAnswer({
   nextQuestion,
@@ -11,6 +12,7 @@ export default function AfterAnswer({
   questionMessage,
   setUsingHelp,
   setHasHelp,
+  setQuestionResponsed,
 }: afterAnswerInterface) {
   return (
     <div>
@@ -32,6 +34,7 @@ export default function AfterAnswer({
                 nextQuestion();
                 setUsingHelp(null);
                 setHasHelp(true);
+                setQuestionResponsed(false);
               }}
             >
               Next Question

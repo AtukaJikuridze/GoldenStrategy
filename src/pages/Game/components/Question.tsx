@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import timer from "../../../assets/timer.svg";
 import axios from "axios";
 import { API } from "../../../baseAPI";
 import AfterAnswer from "./AfterAnswer";
 import NoMoreHp from "./NoMoreHp";
 import Help from "./Help";
+import { MyContext } from "../../../Context/myContext";
+import { Link } from "react-router-dom";
+import AnswerList from "./AnswerList";
+import SeenAllQuestions from "./SeenAllQuestions";
 
 export default function Question() {
   interface QuestionInfo {
     question_id: number;
     question: string;
     answers: string[];
-    avaialbe_x_coins: string[];
+    available_x_coins: string[];
   }
 
   const [questionInfo, setQuestionInfo] = useState<QuestionInfo | null>(null);
@@ -25,21 +29,37 @@ export default function Question() {
   const [questionMessage, setQuestionMessage] = useState<string>("");
   const [usingHelp, setUsingHelp] = useState<boolean | null>(null);
   const [hasHelp, setHasHelp] = useState<boolean>(true);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>(""); // ჰელფი ან სიცოცხლე თუარ გაქ ეს მესიჯი გამოაქ
+  const [questionResponsed, setQuestionResponsed] = useState<boolean>(false); // კითხვის პასუხი მოსულია თუ თრუა
+  const context = useContext(MyContext);
 
   useEffect(() => {
+    console.log("questionResponsed" + " " + questionResponsed);
+  }, [questionResponsed]);
+
+  useEffect(() => {
+    console.log(answer);
+
     if (usingHelp !== null) {
       axios
         .post(`${API}/questions/active`, {
-          user_id: 64,
+          user_id: context?.userInfo?.id,
           usingHelp: usingHelp ? 1 : 0,
           language: "EN",
         })
         .then((response: any) => {
-          const { avaialbe_x_coins, ...rest } = response.data;
-          setQuestionInfo(rest);
-          setXCoins(avaialbe_x_coins);
-          setErrorMessage("");
+          console.log(response);
+          setQuestionResponsed(true);
+
+          if (response.data === "You have seen all the questions.") {
+            // setAnswer("You have seen all the questions.");
+            setQuestionInfo(null);
+          } else {
+            const { available_x_coins, ...rest } = response.data;
+            setQuestionInfo(rest);
+            setXCoins(available_x_coins);
+            setErrorMessage("");
+          }
         })
         .catch((error) => {
           if (
@@ -48,6 +68,8 @@ export default function Question() {
             error.response.data ===
               "You don't have enough help points to use help."
           ) {
+            console.log(true);
+
             setHasHelp(false);
             setErrorMessage("You don't have enough help points to use help.");
           } else if (
@@ -79,7 +101,7 @@ export default function Question() {
     const answerPayload = {
       question_id: questionInfo?.question_id,
       answer: myAnswer || answerForX,
-      user_id: 64,
+      user_id: context?.userInfo?.id,
       time: 40,
       use_x: useX || 0,
       language: "EN",
@@ -89,6 +111,8 @@ export default function Question() {
       .post(`${API}/questions/answer`, answerPayload)
       .then((res: any) => {
         setQuestionMessage(res.data);
+        console.log(res);
+
         if (!useX) {
           setAnswer(myAnswer || "");
         } else {
@@ -120,6 +144,7 @@ export default function Question() {
             questionMessage={questionMessage}
             setUsingHelp={setUsingHelp}
             setHasHelp={setHasHelp}
+            setQuestionResponsed={setQuestionResponsed}
           />
         </>
       ) : showCoinPopup ? (
@@ -153,7 +178,7 @@ export default function Question() {
                 <div className="text-red-500 text-center mb-4">
                   {errorMessage}
                 </div>
-                <h1>Do You Want to buy ?</h1>
+                <h1>Do you want to buy?</h1>
                 <div className="flex gap-10 mt-5">
                   <button className="text-black bg-yellowButton rounded-lg px-10 py-3">
                     Yes
@@ -177,30 +202,25 @@ export default function Question() {
                 <img src={timer} alt="Timer" />
                 <p>0:50</p>
               </div>
-              <div className="w-[500px] max-w-full h-[250px] bg-cardBgBlack flex justify-center items-center p-6 overflow-y-scroll scrollbar-hide rounded-md">
-                <p className="overflow-hidden text-ellipsis break-words text-center">
-                  {questionInfo?.question}
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-y-4 gap-x-[2%]">
-                {questionInfo ? (
-                  questionInfo.answers?.map((e: string, i: number) => (
-                    <div className="w-[49%] flex justify-center" key={i}>
-                      <div
-                        className="cursor-pointer rounded-sm py-3 overflow-hidden text-ellipsis break-words text-center w-[80%] bg-cardBgBlack flex justify-center"
-                        onClick={() => {
-                          confirmAnswer(e);
-                          setAnswerForX(e);
-                        }}
-                      >
-                        <p className="text-sm">{e}</p>
-                      </div>
-                    </div>
-                  ))
-                ) : (
-                  <h1>No questions available</h1>
-                )}
-              </div>
+
+              {questionInfo ? (
+                <>
+                  
+                    {questionInfo ? (
+                      <AnswerList
+                        questionInfo={questionInfo}
+                        confirmAnswer={confirmAnswer}
+                        setAnswerForX={setAnswerForX}
+                        questionResponsed={questionResponsed}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  
+                </>
+              ) : (
+                <SeenAllQuestions questionResponsed={questionResponsed} />
+              )}
             </>
           )}
         </>

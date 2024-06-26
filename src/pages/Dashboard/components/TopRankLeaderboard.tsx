@@ -1,6 +1,4 @@
-import React from "react";
-import Loader from "../../../components/Loader";
-import { tranasctionsInterface } from "../../../Context/myContext";
+
 import user from "../../../assets/user.svg";
 
 interface userInfoInterface {
@@ -71,27 +69,7 @@ export default function TopRankLeaderboard(props: {
           </div>
         ))}
 
-        {/* {props.leaderBoardInfo ? (
-          props.leaderBoardInfo.map((e: userInfoInterface) => (
-            <div className="flex justify-between mb-8  ">
-              <div className="flex flex-col items-center  w-[33%]">
-                <img src={user} alt="" />
-              </div>
-              <div className="flex flex-col items-center w-[33%]">
-                <p> {e.username}1</p>
-              </div>
-              <div className="flex flex-col items-center w-[33%]">
-                <p> {e.coin}</p>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="  w-full  flex justify-center ">
-            <div className="w-[225px] h-[425px] py-32">
-              <Loader width={"100%"} />
-            </div>
-          </div>
-        )} */}
+      
       </div>
     </div>
   );

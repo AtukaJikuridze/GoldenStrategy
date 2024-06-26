@@ -7,7 +7,7 @@ import { API } from "../../baseAPI";
 
 export default function Shop() {
   interface CardInterface {
-    product_image: string | null; // Assuming product_image is a string URL
+    product_image: string | null; 
     product_name: string;
     product_price_in_usd?: number;
     product_price_in_coin?: number;

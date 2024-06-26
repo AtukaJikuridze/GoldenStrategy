@@ -3,11 +3,10 @@ import user from "../assets/user.svg";
 import bell from "../assets/bell.svg";
 import logout from "../assets/logout.svg";
 import { MyContext } from "../Context/myContext";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 export default function Navbar() {
   const context = useContext(MyContext);
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
   const { pathname } = useLocation();
 
   const links = [
@@ -46,9 +45,19 @@ export default function Navbar() {
       </div>
 
       <div className="bg-cardBgBlack py-5 px-8 rounded-xl flex items-center gap-5  order-1 lg:gap-12">
-        <div className="flex items-center gap-5">
+        <div className="flex gap-3  ">
           <img src={user} alt="" />
-          <p className="text-sm">{context?.userInfo?.username}</p>
+
+          <div>
+            {" "}
+            <div className="flex">
+              <p className="text-sm">{context?.userInfo?.username}</p>
+            </div>
+            <div className="flex gap-2">
+              <p>LVL :</p>
+              <p>{context?.userInfo?.level}</p>
+            </div>
+          </div>
         </div>
 
         <button
