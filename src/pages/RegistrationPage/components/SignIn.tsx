@@ -9,13 +9,15 @@ import { API } from "../../../baseAPI";
 
 interface loginTypes {
   userEmail: string;
-  isVerifyed: null | true | undefined;
 }
 
 export default function SignUp() {
   const context = useContext(MyContext);
 
-  const [userTOKEN, setUserTOKEN] = useState("satestod mere washale");
+  const [userTOKEN, setUserTOKEN] = useState("");
+  const [isUserVerifyed, SetIsUserVerifyed] = useState<null | undefined | true>(
+    undefined
+  );
 
   const [inputValues, setInputValues] = useState({
     usernameOrEmail: "",
@@ -23,7 +25,6 @@ export default function SignUp() {
   });
 
   const [loginInfo, setLoginInfo] = useState<loginTypes>({
-    isVerifyed: undefined,
     userEmail: "",
   });
 
@@ -32,12 +33,12 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
-    if (loginInfo.isVerifyed === null) {
+    if (isUserVerifyed === null) {
       axios.post(`${API}/auth/register/verify`, {
         email: loginInfo.userEmail,
       });
     }
-  }, [loginInfo.isVerifyed]);
+  }, [isUserVerifyed]);
 
   useEffect(() => {
     if (userTOKEN) {
@@ -47,7 +48,6 @@ export default function SignUp() {
         )
         .then((res) => {
           setLoginInfo({
-            isVerifyed: res.data.verifyed,
             userEmail: res.data.email,
           });
           context?.setUserInfo(res);
@@ -68,10 +68,14 @@ export default function SignUp() {
         password: inputValues.password,
       })
       .then((res) => {
-        if (res.data === false) {
+        console.log(res.data);
+
+        if (res.data === "payment status is not valid") {
           setErrorMessage(
             "თქვენ არ გაქვთ რეგისტრაციის საფასური გადახდილი, მოგვწერეთ Facebook - ფეიჯზე"
           );
+        } else if (res.data === "you are not verifyed") {
+          SetIsUserVerifyed(null);
         } else {
           setUserTOKEN(res.data);
           context?.setIsLoggined(true);
@@ -112,7 +116,7 @@ export default function SignUp() {
         </div>
       )}
 
-      {loginInfo.isVerifyed === null ? (
+      {isUserVerifyed === null ? (
         <VerificationPannel setLoginInfo={setLoginInfo} />
       ) : (
         <>

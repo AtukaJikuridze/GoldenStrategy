@@ -17,17 +17,15 @@ export default function VerificationPannel(props: { setLoginInfo: Function }) {
       });
     }, 2000);
   };
-  const somethingWrong = () => {
-    setSubmitMessage(false);
-  };
+
   const submitVerificationCode = () => {
     axios
-      .put(`${API}/api/auth/register/verify`, {
+      .put(`${API}/auth/register/verify`, {
         verificationnumber: verificationCode,
       })
       .then(() => verificationSuccess())
-      .catch(() => {
-        somethingWrong();
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -62,7 +60,17 @@ export default function VerificationPannel(props: { setLoginInfo: Function }) {
         <></>
       )}
 
-      <h1 className="cursor-pointer w-full ">Back To SignIn Page</h1>
+      <h1
+        className="cursor-pointer w-full"
+        onClick={() =>
+          props.setLoginInfo({
+            isVerifyed: undefined,
+            userEmail: "",
+          })
+        }
+      >
+        Back To SignIn Page
+      </h1>
 
       <button
         className={`w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow  hover:bg-yellowButtonHover transition-all 

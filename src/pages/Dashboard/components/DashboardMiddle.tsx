@@ -27,6 +27,7 @@ export default function DashboardMiddle() {
 
   const [isRankLeaderboardActive, setIsRankLeaderboardActive] =
     useState<boolean>(false); // top ranks details ro daacher da popup gamodis tu true aris gamochndeba tuarada ara
+  console.log(lastTransactions);
 
   const [isTransactionDetailsActive, setIsTransactionDetailsActive] =
     useState(false); // tranzaqciebis details ro daacher da popup gamodis tu true aris gamochndeba tuarada ara
@@ -65,13 +66,13 @@ export default function DashboardMiddle() {
             </div>
             <div className="flex items-center mt-10 flex-col gap-5 md:text-[12px]">
               <p className=" capitalize md:truncate md:w-[40px]">
-                {lastTransactions ? lastTransactions[0].trasaction_info : ""}
+                {/* {lastTransactions ? lastTransactions[0].trasaction_info : ""} */}
               </p>
               <p className="opacity-10 capitalize md:truncate md:w-[40px]">
-                {lastTransactions ? lastTransactions[1].trasaction_info : ""}
+                {/* {lastTransactions ? lastTransactions[1].trasaction_info : ""} */}
               </p>
               <p className="opacity-10 capitalize md:truncate md:w-[40px]">
-                {lastTransactions ? lastTransactions[2].trasaction_info : ""}
+                {/* {lastTransactions ? lastTransactions[2].trasaction_info : ""} */}
               </p>
             </div>
           </div>
@@ -81,7 +82,7 @@ export default function DashboardMiddle() {
               <div className="border border-yellowButton w-10"></div>
             </div>
             <div className="flex items-center my-8 flex-col gap-5 md:text-[12px]">
-              <p>{lastTransactions ? lastTransactions[2].amount : ""}$</p>
+              {/* <p>{lastTransactions ? lastTransactions[2].amount : ""}$</p> */}
               <p
                 className="text-2xl cursor-pointer md:text-sm"
                 onClick={() => setIsTransactionDetailsActive(true)}
@@ -97,13 +98,13 @@ export default function DashboardMiddle() {
             </div>
             <div className="flex items-center mt-10 flex-col gap-5 md:text-[12px]">
               <p className=" md:truncate md:w-[40px]">
-                {lastTransactions ? lastTransactions[0].date : ""}
+                {/* {lastTransactions[0] ? lastTransactions[0].date : ""} */}
               </p>
               <p className="opacity-10 md:truncate md:w-[40px] ">
-                {lastTransactions ? lastTransactions[1].date : ""}
+                {/* {lastTransactions[1] ? lastTransactions[1].date : ""} */}
               </p>
               <p className="opacity-10 md:truncate md:w-[40px] ">
-                {lastTransactions ? lastTransactions[2].date : ""}
+                {/* {lastTransactions[2] ? lastTransactions[2].date : ""} */}
               </p>
             </div>
           </div>

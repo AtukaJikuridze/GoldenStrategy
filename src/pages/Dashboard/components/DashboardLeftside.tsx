@@ -12,7 +12,7 @@ export default function DashboardLeftside() {
       </div>
 
       <div className="relative">
-        <img src={dComp2} width={400} alt="" />
+        <img src={dComp2} width={400} alt="" className="sm:mb-20" />
         <div className="bg-yellowButton w-[250px] text-center p-2 rounded-md absolute  left-1/2 transform -translate-x-1/2 bottom-5  ">
           <p className="text-black">COMING SOON...</p>
         </div>
