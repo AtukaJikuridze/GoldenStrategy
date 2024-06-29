@@ -15,7 +15,7 @@ export default function SignUp() {
   const context = useContext(MyContext);
 
   const [userTOKEN, setUserTOKEN] = useState("");
-  const [isUserVerifyed, SetIsUserVerifyed] = useState<null | undefined | true>(
+  const [isUserVerified, SetIsUserVerified] = useState<null | undefined | true>(
     undefined
   );
 
@@ -24,33 +24,26 @@ export default function SignUp() {
     password: "",
   });
 
-  const [loginInfo, setLoginInfo] = useState<loginTypes>({
-    userEmail: "",
-  });
-
+  const [loginInfo, setLoginInfo] = useState<loginTypes>({ userEmail: "" });
   const [forgotPassword, setForgotPassword] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
-    if (isUserVerifyed === null) {
+    console.log(isUserVerified);
+
+    if (isUserVerified === null) {
       console.log(loginInfo);
-      axios.post(`${API}/auth/register/verify`, {
-        email: loginInfo.userEmail,
-      });
+      axios.post(`${API}/auth/register/verify`, { email: loginInfo.userEmail });
     }
-  }, [isUserVerifyed]);
+  }, [isUserVerified]);
 
   useEffect(() => {
     if (userTOKEN) {
       console.log(userTOKEN);
       axios.get(`${API}/users/${userTOKEN}`).then((res) => {
-        // setLoginInfo({
-        //   userEmail: res.data.userData.email,
-        // });
         console.log(res);
-
-        context?.setUserInfo(res);
+        context?.setUserInfo(res.data);
       });
     }
   }, [userTOKEN]);
@@ -68,29 +61,29 @@ export default function SignUp() {
         password: inputValues.password,
       })
       .then((res) => {
-        setUserTOKEN(res.data.token);
-
-        if (res.data.status === "payment status is not valid") {
+        if (res.data.status === "you are not verified") {
+          setLoginInfo({ userEmail: res.data.email });
+          SetIsUserVerified(null);
+        } else if (res.data.status === "payment status is not valid") {
           setErrorMessage(
-            "თქვენ არ გაქვთ რეგისტრაციის საფასური გადახდილი, მოგვწერეთ Facebook - ფეიჯზე"
+            "You have not paid the registration fee, write to us on Facebook page"
           );
-        } else if (res.data.status === "you are not verifyed") {
-          SetIsUserVerifyed(null);
         } else {
+          setUserTOKEN(res.data.token);
           context?.setIsLoggined(true);
-          localStorage.setItem("Token", res?.data);
+          localStorage.setItem("Token", res.data.token);
           window.location.reload();
         }
       })
       .catch((error) => {
-        console.log(error);
+        setErrorMessage("Username/email or password is incorrect");
       });
   };
 
   return !forgotPassword ? (
     <div className="flex flex-col justify-center items-center gap-5 xl:w-full ">
       {errorMessage && (
-        <div className="bg-bgBlackTransparent w-full h-[100%] fixed  left-0 top-0 flex items-center justify-center z-[1000]">
+        <div className="bg-bgBlackTransparent w-full h-[100%] fixed left-0 top-0 flex items-center justify-center z-[1000]">
           <div className="bg-cardBgBlack p-5 rounded-lg shadow-lg relative h-[300px] w-[500px] lg:w-[80%] lg:h-[40%]">
             <button
               onClick={() => setErrorMessage("")}
@@ -100,23 +93,27 @@ export default function SignUp() {
             </button>
             <div className="flex flex-col justify-center items-center h-full">
               <p className="text-center text-[17px] mb-3">{errorMessage}</p>
-              <span>
-                შესაძენად დააკლიკეთ{" "}
-                <a
-                  href="https://www.facebook.com/profile.php?id=61561387173137"
-                  target="blank"
-                  className="text-blue-400"
-                >
-                  აქ
-                </a>
-              </span>
+              {errorMessage !== "Username/email or password is incorrect" ? (
+                <span>
+                  Click to buy{" "}
+                  <a
+                    href="https://www.facebook.com/profile.php?id=61561387173137"
+                    target="blank"
+                    className="text-blue-400"
+                  >
+                    here
+                  </a>
+                </span>
+              ) : (
+                <h1>Please enter correct user details</h1>
+              )}
             </div>
           </div>
         </div>
       )}
 
-      {isUserVerifyed === null ? (
-        <VerificationPannel setLoginInfo={setLoginInfo} />
+      {isUserVerified === null ? (
+        <VerificationPannel SetIsUserVerified={SetIsUserVerified} />
       ) : (
         <>
           <h1 className="text-2xl">Sign In</h1>

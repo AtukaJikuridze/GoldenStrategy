@@ -3,7 +3,9 @@ import axios from "axios";
 import InputMessageComp from "../../../components/InputMessage";
 import { API } from "../../../baseAPI";
 
-export default function VerificationPannel(props: { setLoginInfo: Function }) {
+export default function VerificationPannel(props: {
+  SetIsUserVerified: Function;
+}) {
   const [verificationCode, setVerificationCode] = useState<string>("");
   const [submitMessage, setSubmitMessage] = useState<boolean | undefined>(
     undefined
@@ -11,11 +13,8 @@ export default function VerificationPannel(props: { setLoginInfo: Function }) {
   const verificationSuccess = () => {
     setSubmitMessage(true);
     setTimeout(() => {
-      props.setLoginInfo({
-        isVerifyed: "true",
-        userEmail: "",
-      });
-    }, 2000);
+      props.SetIsUserVerified(true);
+    }, 1500);
   };
 
   const submitVerificationCode = () => {
@@ -55,12 +54,7 @@ export default function VerificationPannel(props: { setLoginInfo: Function }) {
 
       <h1
         className="cursor-pointer w-full"
-        onClick={() =>
-          props.setLoginInfo({
-            isVerifyed: undefined,
-            userEmail: "",
-          })
-        }
+        onClick={() => props.SetIsUserVerified(true)}
       >
         Back To SignIn Page
       </h1>

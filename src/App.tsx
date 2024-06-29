@@ -39,8 +39,6 @@ function App() {
   return (
     <div className={`App ${context?.isLoggined ? "lg:pt-32" : ""}`}>
       {context?.isLoggined ? <Navbar /> : ""}
-      {/* <Shop /> */}
-      {/* <Game /> */}
 
       <Routes>
         <Route path="GoldenStrategy/Login" element={<RegistrationPage />} />
