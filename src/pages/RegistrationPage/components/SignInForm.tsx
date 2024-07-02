@@ -21,7 +21,10 @@ export default function SignInForm({
   setForgotPassword,
 }: formTypes) {
   return (
-    <form className="flex flex-col gap-5 xl:w-full " onSubmit={loginSubmit}>
+    <form
+      className="flex flex-col gap-5 xl:w-[50%] md:!w-full "
+      onSubmit={loginSubmit}
+    >
       <label>
         <p className="mb-2 mx-0.5">UserName</p>
         <input

@@ -6,10 +6,10 @@ import InputMessageComp from "../../../components/InputMessage";
 
 export default function SignUp(props: { setIsLogging: Function }) {
   interface submitInfoInterface {
-    messageColor: boolean | undefined;
+    messageColorBoolean: boolean | undefined;
     message: string;
   }
-  const [submitInfo, setSubmitInfo] = useState<any>({
+  const [submitInfo, setSubmitInfo] = useState<submitInfoInterface>({
     messageColorBoolean: undefined,
     message: "",
   });

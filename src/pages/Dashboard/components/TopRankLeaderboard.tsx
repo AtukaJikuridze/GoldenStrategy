@@ -1,5 +1,6 @@
-
+import { useContext } from "react";
 import user from "../../../assets/user.svg";
+import { MyContext } from "../../../Context/myContext";
 
 interface userInfoInterface {
   username: string;
@@ -11,17 +12,21 @@ export default function TopRankLeaderboard(props: {
   setIsRankLeaderboardActive: Function;
   leaderBoardInfo: any;
 }) {
+  const context = useContext(MyContext);
   return (
     <div
-      className={`bg-bgBlackTransparent w-full h-full fixed left-0 top-0 transition-all   ${
+      className={`bg-bgBlackTransparent w-full  h-full fixed left-0 top-0  transition-all   ${
         props.isRankLeaderboardActive ? "visible" : "invisible"
       }  ${props.isRankLeaderboardActive ? "opacity-1" : "opacity-0"} `}
     >
-      <div className="absolute w-[50%] h-[70%] rounded-lg  bg-cardBgBlack top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-y-scroll  scrollbar-hide">
+      <div className="absolute w-[50%] h-[70%] md:w-[90%]  rounded-lg  bg-cardBgBlack top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-y-scroll  scrollbar-hide">
         <div className="flex items-center justify-center  bg-gray-100 absolute right-5 top-5">
           <button
-            className="w-20 h-10 bg-red-600 text-white font-bold flex items-center justify-center hover:bg-red-500 transition-all"
-            onClick={() => props.setIsRankLeaderboardActive(false)}
+            className="w-20 h-10 bg-red-600 text-white  font-bold flex items-center justify-center hover:bg-red-500 transition-all"
+            onClick={() => {
+              props.setIsRankLeaderboardActive(false);
+              context?.setHideNavbar(false);
+            }}
           >
             <svg
               className="w-6 h-6"
@@ -68,8 +73,6 @@ export default function TopRankLeaderboard(props: {
             </div>
           </div>
         ))}
-
-      
       </div>
     </div>
   );

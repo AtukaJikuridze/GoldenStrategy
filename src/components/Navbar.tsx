@@ -7,6 +7,8 @@ import { Link, useLocation } from "react-router-dom";
 export default function Navbar() {
   const context = useContext(MyContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState<number>();
+
   const { pathname } = useLocation();
 
   const links = [
@@ -24,8 +26,6 @@ export default function Navbar() {
     },
   ];
 
-  const [activeLink, setActiveLink] = useState<number>();
-
   useEffect(() => {
     const lastSlashIndex = pathname.lastIndexOf("/");
     if (lastSlashIndex !== -1) {
@@ -36,9 +36,11 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`myContainer flex justify-between items-center transition-all duration-300  h-24 my-8 lg:z-10 lg:fixed lg:top-0 left-[50%] lg:-translate-x-1/2 lg:flex-col lg:gap-4 lg:justify-normal lg:bg-cardBgBlack lg:w-[100%] md:!w-[100%] lg:overflow-hidden  ${
+      className={`myContainer flex justify-between items-center transition-all duration-300  h-24 my-8 lg:z-10 lg:fixed lg:top-0 left-[50%] lg:-translate-x-1/2 lg:flex-col lg:gap-4 lg:justify-normal lg:bg-cardBgBlack lg:w-[100%] md:!w-[100%] lg:overflow-hidden lg:border lg:border-solid lg:border-yellowButton lg:shadow-white ${
         isOpen ? "h-[480px]" : ""
-      } `}
+      } 
+      ${context?.hideNavbar ? "lg:opacity-0" : "lg:opacity-100"}
+      `}
     >
       <div className=" rounded-[30px]   border-yellowButton border p-4 px-8 cursor-pointer lg:order-3  sm:p-3 sm:px-12  ">
         <p className="text-sm sm:text-[12px]">Golden Strategy</p>
@@ -81,7 +83,10 @@ export default function Navbar() {
                   className={`cursor-pointer transition-all relative h-full flex justify-center items-center sm:text-sm  ${
                     activeLink === i ? "text-white" : "text-gray-400"
                   } `}
-                  onClick={() => setActiveLink(i)}
+                  onClick={() => {
+                    setActiveLink(i);
+                    setIsOpen(false);
+                  }}
                 >
                   {e.title}
 

@@ -85,7 +85,10 @@ export default function DashboardMiddle() {
               {/* <p>{lastTransactions ? lastTransactions[2].amount : ""}$</p> */}
               <p
                 className="text-2xl cursor-pointer md:text-sm"
-                onClick={() => setIsTransactionDetailsActive(true)}
+                onClick={() => {
+                  setIsTransactionDetailsActive(true);
+                  context?.setHideNavbar(true);
+                }}
               >
                 Details
               </p>

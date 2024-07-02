@@ -24,7 +24,7 @@ export default function AfterAnswer({
             </p>
           </div>
           <div className="flex justify-between mt-5 sm:gap-5">
-            <div className="bg-[#DBFF00] text-black rounded-md py-2 px-12 flex justify-center items-center">
+            <div className="bg-[#DBFF00] text-black rounded-md py-2 px-10 flex justify-center items-center">
               {answer}
             </div>
 

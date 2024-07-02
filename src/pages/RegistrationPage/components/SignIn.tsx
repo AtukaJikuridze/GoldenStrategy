@@ -75,7 +75,7 @@ export default function SignUp() {
           window.location.reload();
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorMessage("Username/email or password is incorrect");
       });
   };

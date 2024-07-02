@@ -18,11 +18,14 @@ export default function TransactionDetails(props: {
         props.isTransactionDetailsActive ? "visible" : "invisible"
       }  ${props.isTransactionDetailsActive ? "opacity-1" : "opacity-0"} `}
     >
-      <div className="absolute w-[50%] h-[70%] rounded-lg  bg-cardBgBlack top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-y-scroll  scrollbar-hide">
+      <div className="absolute w-[50%] h-[70%] lg:w-[90%] rounded-lg  bg-cardBgBlack top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-y-scroll  scrollbar-hide">
         <div className="flex items-center justify-center  bg-gray-100 absolute right-5 top-5">
           <button
             className="w-20 h-10 bg-red-600 text-white font-bold flex items-center justify-center hover:bg-red-500 transition-all"
-            onClick={() => props.setIsTransactionDetailsActive(false)}
+            onClick={() => {
+              props.setIsTransactionDetailsActive(false);
+              context?.setHideNavbar(false);
+            }}
           >
             <svg
               className="w-6 h-6"

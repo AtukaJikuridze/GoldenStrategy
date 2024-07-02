@@ -51,7 +51,6 @@ export default function Question() {
           setQuestionResponsed(true);
 
           if (response.data === "You have seen all the questions.") {
-            // setAnswer("You have seen all the questions.");
             setQuestionInfo(null);
           } else {
             const { available_x_coins, ...rest } = response.data;
@@ -132,7 +131,7 @@ export default function Question() {
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5  md:w-full">
       {hasHealth === false ? (
         <NoMoreHp />
       ) : answer ? (
@@ -148,7 +147,7 @@ export default function Question() {
         </>
       ) : showCoinPopup ? (
         <div className="w-[500px] max-w-full h-[250px] bg-cardBgBlack flex justify-center items-center p-6 overflow-y-scroll scrollbar-hide rounded-md">
-          <div className="flex gap-5">
+          <div className="flex gap-5  ">
             {xCoins?.map((coin: string, index: number) => (
               <button
                 key={index}
@@ -173,7 +172,7 @@ export default function Question() {
         <>
           {errorMessage ? (
             <>
-              <div className="w-[500px] max-w-full h-[250px] flex-col bg-cardBgBlack flex justify-center items-center p-6 overflow-y-scroll scrollbar-hide rounded-md">
+              <div className="w-[500px]   max-w-full h-[250px] flex-col bg-cardBgBlack flex justify-center items-center p-6 overflow-y-scroll scrollbar-hide rounded-md">
                 <div className="text-red-500 text-center mb-4">
                   {errorMessage}
                 </div>

@@ -7,10 +7,14 @@ export default function VerificationPannel(props: {
   SetIsUserVerified: Function;
 }) {
   const [verificationCode, setVerificationCode] = useState<string>("");
+
   const [submitMessage, setSubmitMessage] = useState<boolean | undefined>(
     undefined
   ); // verification code ს დასაბმითბისას გამოიტანს ან სწორია და ვერიფიკაცია წარმატებით გაიარე ან ვერიფიკაციის კოდი არასწორია
+
   const verificationSuccess = () => {
+    console.log(true);
+
     setSubmitMessage(true);
     setTimeout(() => {
       props.SetIsUserVerified(true);
@@ -24,7 +28,10 @@ export default function VerificationPannel(props: {
       })
       .then(() => verificationSuccess())
       .catch((error) => {
-        console.log(error);
+        setSubmitMessage(false);
+        setTimeout(() => {
+          setSubmitMessage(undefined);
+        }, 1500);
       });
   };
 
@@ -38,7 +45,7 @@ export default function VerificationPannel(props: {
           value={verificationCode}
           placeholder="Enter Verification Code"
           onChange={(e) => setVerificationCode(e.target.value)}
-          className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
+          className="w-[470px]  h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
         />
       </div>
       {submitMessage !== undefined && (

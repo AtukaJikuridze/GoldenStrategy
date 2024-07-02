@@ -17,11 +17,11 @@ function App() {
   const navigate = useNavigate();
   const context = useContext(MyContext);
   useEffect(() => {
-    // axios
-    //   .post(`${API}/users/delete-seen-questions`, {
-    //     email: "atukajiquridze@gmail.com",
-    //   })
-    //   .then((res) => console.log(res));
+    axios
+      .post(`${API}/users/delete-seen-questions`, {
+        email: "avtojikuridze@gmail.com",
+      })
+      .then((res) => console.log(res));
 
     axios.get(`${API}/users/${localStorage.getItem("Token")}`).then((res) => {
       context?.setUserInfo(res.data.userData[0]);

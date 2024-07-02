@@ -7,6 +7,7 @@ export default {
       },
       boxShadow: {
         yellowShadow: "0px 0px 30.5px 0px #FFD106;",
+        white: "0 35px 60px -55px rgba(0, 0, 0, 0.3)",
       },
 
       colors: {

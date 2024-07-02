@@ -8,6 +8,7 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
   const [verificationCode, setVerificationCode] = useState<string>(""); /// ვერიფიკაციის კოდის ველიუ აქ ინახება
   const [newPassword, setNewPassword] = useState<string>(""); // newPassword ის ველიუ აქ ინახება
   const [showPassword, setShowPassword] = useState<boolean>(false); // ინფათზე NewPassword არის ღილაკი საიდანაც შეგიძლია გააკეთო Show/Hide Password
+  const [mailVisible, setMailVisible] = useState<boolean>(true); // თუ თრუა მაშინ მეილი გამოჩენილი იქნება თაურადა მარტო ვერიფიკაციის ველები
   const [isEmailCorrect, setIsEmailCorrect] = useState<boolean>(false); // თუ არის თრუ გამოიტანს ვერიფიკაციის და ახალი პასვორდის ინფათებს თუარადა დაწერს რო არასწორიაო
   const [isEmailIncorrect, setIsEmailInCorrect] = useState<boolean>(false);
   const [buttonClickTimeout, setButtonClickTimeout] = useState(false); // button roar gaispamos click ebit
@@ -30,6 +31,7 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
       setVerificationCode("");
       setNewPassword("");
       setIsEmailCorrect(false);
+      setMailVisible(true);
       setInputMessage({
         message: "",
         messageColor: false,
@@ -50,14 +52,13 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
         console.log(res);
         setIsEmailCorrect(res.data ? true : false);
         setButtonClickTimeout(false);
+        setMailVisible(false);
       })
       .catch((error) => {
         console.log(error);
-
         setIsEmailCorrect(false);
         setIsEmailInCorrect(true);
         setButtonClickTimeout(false);
-
         setTimeout(() => {
           setIsEmailInCorrect(false);
         }, 4000);
@@ -77,20 +78,32 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
           message: "Verification Code is Incorrect",
           messageColor: false,
         });
+        setTimeout(() => {
+          setInputMessage({
+            message: "",
+            messageColor: false,
+          });
+        }, 2500);
       });
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-5">
+    <div className="flex flex-col justify-center items-center gap-5 md:w-full">
       <h1 className="text-2xl">Sign In</h1>
       <p>Enter Your Infromation</p>
-      <input
-        name="password"
-        placeholder="Enter Email"
-        value={emailAdress}
-        onChange={(e) => setEmailAdress(e.target.value)}
-        className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
-      />
+
+      {mailVisible ? (
+        <input
+          name="password"
+          placeholder="Enter Email"
+          value={emailAdress}
+          onChange={(e) => setEmailAdress(e.target.value)}
+          className="w-[470px] md:!w-full  h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
+        />
+      ) : (
+        ""
+      )}
+
       {isEmailIncorrect && (
         <InputMessageComp
           message="Email is Incorrect"
@@ -104,14 +117,14 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
             placeholder="Enter Verification Code"
             value={verificationCode}
             onChange={(e) => setVerificationCode(e.target.value)}
-            className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
+            className="w-[470px] md:!w-full h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
           />
-          <div className="relative ">
+          <div className="relative md:w-full ">
             <input
               value={newPassword}
               placeholder="Enter New Password"
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-[470px] h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
+              className="w-[470px] md:!w-full h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
               name="password"
               type={showPassword ? "text" : "password"}
             />
@@ -141,7 +154,7 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
         message={inputMessage.message}
       />
       <button
-        className={`w-[470px] py-5 bg-yellowButton rounded-md shadow-yellowShadow  hover:bg-yellowButtonHover transition-all ${
+        className={`w-[470px] md:w-full py-5 bg-yellowButton rounded-md shadow-yellowShadow  hover:bg-yellowButtonHover transition-all ${
           buttonClickTimeout ? "cursor-not-allowed " : ""
         }`}
         onClick={isEmailCorrect ? submitNewPassword : submitEmail}

@@ -21,7 +21,7 @@ export default function AnswerList({
 }: answerListInterface) {
   return questionResponsed ? (
     <>
-      <div className="w-[500px] max-w-full h-[250px] bg-cardBgBlack flex justify-center items-center p-6 overflow-y-scroll scrollbar-hide rounded-md">
+      <div className="w-[500px]  md:w-full max-w-full h-[250px] bg-cardBgBlack flex justify-center items-center p-6 overflow-y-scroll scrollbar-hide rounded-md">
         <p className="overflow-hidden text-ellipsis break-words text-center">
           {questionInfo?.question}
         </p>

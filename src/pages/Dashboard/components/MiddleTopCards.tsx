@@ -35,7 +35,7 @@ export default function MiddleTopCards(props: {
             </div>
           </div>
         </div>
-        <div className="relative md:flex md:justify-center    ">
+        <div className="relative md:flex md:justify-center lg:hidden    ">
           <img
             src={dComp3}
             alt=""
@@ -48,10 +48,13 @@ export default function MiddleTopCards(props: {
           </div>
         </div>
       </div>
-      <div className=" bg-cardBgBlack pt-5 px-14 rounded-lg flex flex-col justify-between 4xl:w-[20%] 3xl:px-2  2xl:mt-10 2xl:!w-full  md:order-1 md:mb-10">
+      <div className=" bg-cardBgBlack pt-5  px-14 rounded-lg flex flex-col justify-between 4xl:w-[20%] 3xl:px-2  2xl:mt-10 2xl:!w-full  md:order-1 md:mb-10">
         <div
-          className="flex gap-3 justify-center cursor-pointer 3xl:gap-1 "
-          onClick={() => props.setIsRankLeaderboardActive(true)}
+          className="flex gap-3 justify-center cursor-pointer 3xl:gap-1 lg:mb-10 "
+          onClick={() => {
+            props.setIsRankLeaderboardActive(true);
+            context?.setHideNavbar(true);
+          }}
         >
           <p>Top Ranks</p>
           <img src={topRanks} alt="" />

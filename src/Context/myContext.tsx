@@ -5,6 +5,8 @@ interface ContextInterface {
   userInfo: userInterface | null;
   userTransactions: tranasctionsInterface | null;
   isLoggined: boolean;
+  hideNavbar: boolean;
+  setHideNavbar: Function;
   setIsLoggined: Function;
   setUserInfo: Function;
   setUserTransactions: Function;
@@ -52,6 +54,7 @@ export interface tranasctionsInterface {
 export const MyContextProvider = ({ children }: any) => {
   const [userTransactions, setUserTransactions] =
     useState<null | tranasctionsInterface>(null);
+  const [hideNavbar, setHideNavbar] = useState<boolean>(false);
 
   const [userInfo, setUserInfo] = useState<null | userInterface>(null);
   const [isLoggined, setIsLoggined] = useState<boolean>(
@@ -67,6 +70,8 @@ export const MyContextProvider = ({ children }: any) => {
         userTransactions,
         isLoggined,
         setIsLoggined,
+        hideNavbar,
+        setHideNavbar,
       }}
     >
       {children}
