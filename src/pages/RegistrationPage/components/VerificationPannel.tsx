@@ -27,7 +27,7 @@ export default function VerificationPannel(props: {
         verificationnumber: verificationCode,
       })
       .then(() => verificationSuccess())
-      .catch((error) => {
+      .catch(() => {
         setSubmitMessage(false);
         setTimeout(() => {
           setSubmitMessage(undefined);

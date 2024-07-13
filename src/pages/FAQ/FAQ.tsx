@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { API } from "../../baseAPI";
+import { MyContext } from "../../Context/myContext";
 
 interface FAQItem {
   id: number;
@@ -9,11 +10,15 @@ interface FAQItem {
 }
 
 const FAQ = () => {
+  const context = useContext(MyContext);
   const [FAQ_Questions, setFAQ_Questions] = useState<null | FAQItem[]>(null);
 
   useEffect(() => {
-    axios.get(`${API}/faq`).then((res: any) => setFAQ_Questions(res.data));
+    axios
+      .post(`${API}/faq`, { language: context?.language })
+      .then((res: any) => setFAQ_Questions(res.data));
   }, []);
+  console.log(FAQ_Questions);
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 

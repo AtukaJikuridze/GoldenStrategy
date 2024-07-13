@@ -41,10 +41,12 @@ export default function SignUp() {
   useEffect(() => {
     if (userTOKEN) {
       console.log(userTOKEN);
-      axios.get(`${API}/users/${userTOKEN}`).then((res) => {
-        console.log(res);
-        context?.setUserInfo(res.data);
-      });
+      axios
+        .post(`${API}/users/${userTOKEN}`, { language: context?.language })
+        .then((res) => {
+          console.log(res);
+          context?.setUserInfo(res.data);
+        });
     }
   }, [userTOKEN]);
 

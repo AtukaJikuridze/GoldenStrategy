@@ -64,6 +64,7 @@ export default function Card({
         email: userEmail,
         card_id: cardId, // Add card_id parameter for gift cards
         which_x: product_name,
+        language: "EN",
       });
 
       // Check response status
@@ -88,7 +89,7 @@ export default function Card({
   };
 
   return (
-    <div className="w-[23%] bg-cardBgBlack rounded-md h-[500px] flex flex-col justify-center items-center">
+    <div className="w-[23%] bg-cardBgBlack rounded-md h-[500px] flex flex-col justify-center items-center lg:w-[49%] sm:!w-full">
       <img
         src={product_image ?? ""}
         alt={product_name}

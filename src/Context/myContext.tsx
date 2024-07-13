@@ -4,12 +4,14 @@ export const MyContext = createContext<ContextInterface | undefined>(undefined);
 interface ContextInterface {
   userInfo: userInterface | null;
   userTransactions: tranasctionsInterface | null;
+  language: string;
   isLoggined: boolean;
   hideNavbar: boolean;
   setHideNavbar: Function;
   setIsLoggined: Function;
   setUserInfo: Function;
   setUserTransactions: Function;
+  setLanguage: Function;
 }
 interface userInterface {
   avatar: string;
@@ -57,6 +59,7 @@ export const MyContextProvider = ({ children }: any) => {
   const [hideNavbar, setHideNavbar] = useState<boolean>(false);
 
   const [userInfo, setUserInfo] = useState<null | userInterface>(null);
+  const [language, setLanguage] = useState<string>("GE");
   const [isLoggined, setIsLoggined] = useState<boolean>(
     localStorage.getItem("Token") ? true : false
   );
@@ -72,6 +75,8 @@ export const MyContextProvider = ({ children }: any) => {
         setIsLoggined,
         hideNavbar,
         setHideNavbar,
+        language,
+        setLanguage,
       }}
     >
       {children}

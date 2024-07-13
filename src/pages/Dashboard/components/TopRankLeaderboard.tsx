@@ -4,7 +4,7 @@ import { MyContext } from "../../../Context/myContext";
 
 interface userInfoInterface {
   username: string;
-  coin: number;
+  point: number;
 }
 
 export default function TopRankLeaderboard(props: {
@@ -55,7 +55,7 @@ export default function TopRankLeaderboard(props: {
             <div className=" mt-2 w-[45px] h-[2px] bg-yellowButton shadow-yellowShadow"></div>
           </div>
           <div className="flex flex-col items-center w-[33%]">
-            <p> Coin</p>
+            <p> Point</p>
             <div className=" mt-2 w-[45px] h-[2px] bg-yellowButton shadow-yellowShadow"></div>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function TopRankLeaderboard(props: {
               <p> {e.username}1</p>
             </div>
             <div className="flex flex-col items-center w-[33%]">
-              <p> {e.coin}</p>
+              <p> {e.point}</p>
             </div>
           </div>
         ))}

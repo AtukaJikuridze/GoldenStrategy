@@ -48,9 +48,9 @@ export default function MiddleTopCards(props: {
           </div>
         </div>
       </div>
-      <div className=" bg-cardBgBlack pt-5  px-14 rounded-lg flex flex-col justify-between 4xl:w-[20%] 3xl:px-2  2xl:mt-10 2xl:!w-full  md:order-1 md:mb-10">
+      <div className=" bg-cardBgBlack pt-5  rounded-lg flex flex-col justify-between 4xl:w-[20%] 3xl:px-2  2xl:mt-10 2xl:!w-full  md:order-1 md:mb-10">
         <div
-          className="flex gap-3 justify-center cursor-pointer 3xl:gap-1 lg:mb-10 "
+          className="flex gap-3 justify-center cursor-pointer 3xl:gap-1 lg:mb-10 3xl:mb-4 "
           onClick={() => {
             props.setIsRankLeaderboardActive(true);
             context?.setHideNavbar(true);

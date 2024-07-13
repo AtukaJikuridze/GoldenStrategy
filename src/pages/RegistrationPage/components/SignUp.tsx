@@ -1,10 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { API } from "../../../baseAPI";
 import InputMessageComp from "../../../components/InputMessage";
+import { MyContext } from "../../../Context/myContext";
 
 export default function SignUp(props: { setIsLogging: Function }) {
+  const context = useContext(MyContext);
   interface submitInfoInterface {
     messageColorBoolean: boolean | undefined;
     message: string;
@@ -15,11 +17,13 @@ export default function SignUp(props: { setIsLogging: Function }) {
   });
   const [formValue, setFormValue] = useState({
     username: "",
-    name: "",
+    referralCode: "",
     email: "",
     password: "",
-    avatar: 1,
+    avatar: "1",
   });
+  console.log(formValue);
+
   const handleInput = (e: any) => {
     const { name, value } = e.target;
     setFormValue({ ...formValue, [name]: value });
@@ -27,13 +31,17 @@ export default function SignUp(props: { setIsLogging: Function }) {
   const handleFormsubmit = (e: any) => {
     e.preventDefault();
 
+    console.log(formValue);
+    console.log(formValue.referralCode ? formValue.referralCode : null);
+
     axios
       .post(`${API}/auth/register`, {
         username: formValue.username,
         password: formValue.password,
         email: formValue.email,
-        name: formValue.name,
-        avatar: 5,
+        avatar: formValue.avatar,
+        refferalCode: formValue.referralCode ? formValue.referralCode : null,
+        language: context?.language,
       })
       .then((res: any) => {
         setSubmitInfo({
@@ -74,17 +82,25 @@ export default function SignUp(props: { setIsLogging: Function }) {
             required
           />
         </label>
-        <label>
-          <p className="mb-2 mx-0.5">Full Name</p>
-          <input
-            name="name"
-            type="text"
-            className="w-[470px] lg:w-[100%] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
-            onChange={handleInput}
-            value={formValue.name}
+
+        <label className="">
+          <p className="mb-2 mx-0.5">Gender</p>
+
+          <select
+            name="avatar"
             required
-          />
+            onChange={handleInput}
+            className=" bg-transparent w-[470px] py-3 outline-none border-gray-600 border  rounded-md px-3 lg:w-[100%] "
+          >
+            <option value="1" className="bg-black  rounded-md px-3">
+              Male
+            </option>
+            <option value="0" className="bg-black  rounded-md px-3">
+              Female
+            </option>
+          </select>
         </label>
+
         <label>
           <p className="mb-2 mx-0.5">Email</p>
           <input
@@ -120,6 +136,16 @@ export default function SignUp(props: { setIsLogging: Function }) {
               />
             )}
           </div>
+        </label>
+        <label>
+          <p className="mb-2 mx-0.5">Referral Code (Optional)</p>
+          <input
+            name="referralCode"
+            type="number"
+            className="w-[470px] lg:w-[100%] h-[50px] rounded-md border border-gray-600 outline-none px-3 text-sm bg-transparent"
+            onChange={handleInput}
+            value={formValue.referralCode}
+          />
         </label>
         {submitInfo.messageColorBoolean !== undefined && (
           <InputMessageComp

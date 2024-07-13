@@ -14,7 +14,7 @@ export default function Shop() {
     product_price_in_usd?: number;
     product_price_in_coin?: number;
     product_description?: string;
-    id:string;
+    id: string;
   }
 
   const [shopItems, setShopItems] = useState<CardInterface[] | null>(null);
@@ -23,7 +23,7 @@ export default function Shop() {
 
   useEffect(() => {
     axios
-      .get(`${API}/market`)
+      .post(`${API}/market`, { language: "EN" })
       .then((res) => setShopItems(res.data))
       .catch((error) => console.error("Error fetching shop items:", error));
   }, []);

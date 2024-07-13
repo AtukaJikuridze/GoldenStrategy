@@ -3,7 +3,7 @@ import user from "../assets/user.svg";
 import bell from "../assets/bell.svg";
 import logout from "../assets/logout.svg";
 import { MyContext } from "../Context/myContext";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 export default function Navbar() {
   const context = useContext(MyContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -42,7 +42,10 @@ export default function Navbar() {
       ${context?.hideNavbar ? "lg:opacity-0" : "lg:opacity-100"}
       `}
     >
-      <div className=" rounded-[30px]   border-yellowButton border p-4 px-8 cursor-pointer lg:order-3  sm:p-3 sm:px-12  ">
+      <div
+        className=" rounded-[30px]   border-yellowButton border p-4 px-8 cursor-pointer lg:order-3  sm:p-3 sm:px-12  "
+        onClick={() => window.location.reload()}
+      >
         <p className="text-sm sm:text-[12px]">Golden Strategy</p>
       </div>
 
