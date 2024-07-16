@@ -1,8 +1,11 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import InputMessageComp from "../../../components/InputMessage";
 import { API } from "../../../baseAPI";
+import { MyContext } from "../../../Context/myContext";
+import languageData_ge from "../../../assets/language_ge.json";
+import languageData_en from "../../../assets/language_en.json";
 export default function ForgotPassword(props: { setForgotPassword: Function }) {
   const [emailAdress, setEmailAdress] = useState<string>("");
   const [verificationCode, setVerificationCode] = useState<string>(""); /// ვერიფიკაციის კოდის ველიუ აქ ინახება
@@ -20,7 +23,14 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
     message: "",
     messageColor: false,
   });
-
+  const context = useContext(MyContext);
+  let deflanguage: any = [];
+  const gotLanguage = context?.defaultLanguage;
+  if (gotLanguage == "EN") {
+    deflanguage = languageData_en;
+  } else {
+    deflanguage = languageData_ge;
+  }
   const passwordChanged = () => {
     setInputMessage({
       message: "Password Changed Succesfully",
@@ -75,7 +85,7 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
       .then(() => passwordChanged())
       .catch(() => {
         setInputMessage({
-          message: "Verification Code is Incorrect",
+          message: deflanguage.loginPage.verUnSuccess,
           messageColor: false,
         });
         setTimeout(() => {
@@ -87,10 +97,12 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
       });
   };
 
+
+  
   return (
     <div className="flex flex-col justify-center items-center gap-5 md:w-full">
-      <h1 className="text-2xl">Sign In</h1>
-      <p>Enter Your Infromation</p>
+      <h1 className="text-2xl">{deflanguage.loginPage.signIn}</h1>
+      <p>{deflanguage.loginPage.enterInfo}</p>
 
       {mailVisible ? (
         <input
@@ -106,15 +118,14 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
 
       {isEmailIncorrect && (
         <InputMessageComp
-          message="Email is Incorrect"
+          message={deflanguage.loginPage.incorrectMail}
           boolean={!isEmailIncorrect}
         />
       )}
       {isEmailCorrect && (
         <>
-          {" "}
           <input
-            placeholder="Enter Verification Code"
+            placeholder={deflanguage.loginPage.enterCode}
             value={verificationCode}
             onChange={(e) => setVerificationCode(e.target.value)}
             className="w-[470px] md:!w-full h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
@@ -122,7 +133,7 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
           <div className="relative md:w-full ">
             <input
               value={newPassword}
-              placeholder="Enter New Password"
+              placeholder={deflanguage.loginPage.enterNewPass}
               onChange={(e) => setNewPassword(e.target.value)}
               className="w-[470px] md:!w-full h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
               name="password"
@@ -146,7 +157,7 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
         className="cursor-pointer w-full "
         onClick={() => props.setForgotPassword(false)}
       >
-        Back To SignIn Page
+        {deflanguage.loginPage.backToSignIn}
       </h1>
 
       <InputMessageComp
@@ -159,12 +170,12 @@ export default function ForgotPassword(props: { setForgotPassword: Function }) {
         }`}
         onClick={isEmailCorrect ? submitNewPassword : submitEmail}
       >
-        Recover Password
+        {deflanguage.loginPage.recPass}
       </button>
       <div className="flex gap-5 mt-14">
-        <p className="cursor-pointer">Privacy Policy</p>
-        <p className="cursor-pointer">FAQ</p>
-        <p className="cursor-pointer">Contact Us</p>
+        <p className="cursor-pointer">{deflanguage.loginPage.privPol}</p>
+        <p className="cursor-pointer">{deflanguage.loginPage.faq}</p>
+        <p className="cursor-pointer">{deflanguage.loginPage.contact}</p>
       </div>
     </div>
   );

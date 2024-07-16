@@ -23,7 +23,7 @@ export default function Shop() {
 
   useEffect(() => {
     axios
-      .post(`${API}/market`, { language: "EN" })
+      .post(`${API}/market`, { language: context?.defaultLanguage })
       .then((res) => setShopItems(res.data))
       .catch((error) => console.error("Error fetching shop items:", error));
   }, []);

@@ -18,7 +18,6 @@ export default function RegistrationPage() {
 
   return (
     <div className="relative p-16 h-full xl:px-5 xl:py-0  2xl:myContainer">
-      {/* <SelectLanguage /> */}
       <main className="py-[80px] text-white flex justify-around items-center h-full relative 2xl:flex-wrap gap-32 lg:gap-16">
         <RegistrationLeftside
           isLogging={isLogging}

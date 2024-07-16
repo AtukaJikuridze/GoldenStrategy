@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import InputMessageComp from "../../../components/InputMessage";
 import { API } from "../../../baseAPI";
+import { MyContext } from "../../../Context/myContext";
+import languageData_ge from "../../../assets/language_ge.json";
+import languageData_en from "../../../assets/language_en.json";
+
 
 export default function VerificationPannel(props: {
   SetIsUserVerified: Function;
@@ -13,13 +17,19 @@ export default function VerificationPannel(props: {
   ); // verification code ს დასაბმითბისას გამოიტანს ან სწორია და ვერიფიკაცია წარმატებით გაიარე ან ვერიფიკაციის კოდი არასწორია
 
   const verificationSuccess = () => {
-    console.log(true);
-
     setSubmitMessage(true);
     setTimeout(() => {
       props.SetIsUserVerified(true);
     }, 1500);
   };
+  const context = useContext(MyContext);
+  let deflanguage: any = [];
+  const gotLanguage = context?.defaultLanguage;
+  if (gotLanguage == "EN") {
+    deflanguage = languageData_en;
+  } else {
+    deflanguage = languageData_ge;
+  }
 
   const submitVerificationCode = () => {
     axios
@@ -37,13 +47,13 @@ export default function VerificationPannel(props: {
 
   return (
     <div className="flex flex-col justify-center items-center gap-5">
-      <h1 className="text-2xl">Please Verify Account </h1>
-      <p>Check Email for verification code</p>
+      <h1 className="text-2xl">{deflanguage.loginPage.verify}</h1>
+      <p>{deflanguage.loginPage.checkmail}</p>
 
       <div className="relative ">
         <input
           value={verificationCode}
-          placeholder="Enter Verification Code"
+          placeholder={deflanguage.loginPage.enterCode}
           onChange={(e) => setVerificationCode(e.target.value)}
           className="w-[470px]  h-[50px] rounded-md border border-gray-600 pr-10 outline-none px-3 text-sm bg-transparent"
         />
@@ -53,8 +63,8 @@ export default function VerificationPannel(props: {
           boolean={submitMessage}
           message={
             submitMessage
-              ? "Verification Success"
-              : "Verification Code is incorrect"
+              ? deflanguage.loginPage.verSuccess
+              : deflanguage.loginPage.verUnSuccess
           }
         />
       )}
@@ -63,7 +73,7 @@ export default function VerificationPannel(props: {
         className="cursor-pointer w-full"
         onClick={() => props.SetIsUserVerified(true)}
       >
-        Back To SignIn Page
+        {deflanguage.loginPage.backToSignIn}
       </h1>
 
       <button
@@ -72,7 +82,7 @@ export default function VerificationPannel(props: {
       }`}
         onClick={submitVerificationCode}
       >
-        Submit Verification Code
+        {deflanguage.loginPage.submitCode}
       </button>
     </div>
   );

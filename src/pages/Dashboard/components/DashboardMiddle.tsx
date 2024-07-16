@@ -8,9 +8,19 @@ import TopRankLeaderboard from "./TopRankLeaderboard";
 import axios from "axios";
 import { API } from "../../../baseAPI";
 import { Link } from "react-router-dom";
+import languageData_ge from "../../../assets/language_ge.json";
+import languageData_en from "../../../assets/language_en.json";
 
 export default function DashboardMiddle() {
-  const context = useContext(MyContext);
+    const context = useContext(MyContext);
+   let deflanguage: any = [];
+   const gotLanguage = context?.defaultLanguage;
+   if (gotLanguage == "EN") {
+     deflanguage = languageData_en;
+   } else {
+     deflanguage = languageData_ge;
+   }
+ 
 
   useEffect(() => {
     axios.get(`${API}/results`).then((res) => {
@@ -48,20 +58,26 @@ export default function DashboardMiddle() {
           <img src={dComp4} alt="" />
           <Link to={"/GoldenStrategy/Game"}>
             {" "}
-            <h1 className="text-3xl cursor-pointer">PLAY GAME</h1>
+            <h1 className="text-3xl cursor-pointer">
+              {deflanguage.dashboard.play}
+            </h1>
           </Link>
         </div>
         <div className="flex bg-cardBgBlack  items-center rounded-xl 2xl:flex-col 2xl:justify-center 2xl:text-center 2xl:pb-4">
           <img src={dComp5} alt="Question" width={158} />
-          <p className="w-32 text-sm">History Of Questions</p>
+          <p className="w-32 text-sm">{deflanguage.dashboard.questionsHis}</p>
         </div>
       </div>
       <div className=" bg-cardBgBlack p-5 rounded-xl">
-        <p className="text-center mb-12 text-xl">Transaction Details</p>
+        <p className="text-center mb-12 text-xl">
+          {deflanguage.dashboard.transDetails}
+        </p>
         <div className="flex justify-around items-top  ">
           <div className="">
             <div className="flex flex-col items-center gap-3">
-              <p className="md:text-[10px]">Transaction</p>
+              <p className="md:text-[10px]">
+                {deflanguage.dashboard.transaction}
+              </p>
               <div className="border border-yellowButton w-10"></div>
             </div>
             <div className="flex items-center mt-10 flex-col gap-5 md:text-[12px]">
@@ -78,7 +94,7 @@ export default function DashboardMiddle() {
           </div>
           <div className="">
             <div className="flex flex-col items-center gap-3 md:text-[12px] ">
-              <p>Amount</p>
+              <p>{deflanguage.dashboard.amount}</p>
               <div className="border border-yellowButton w-10"></div>
             </div>
             <div className="flex items-center my-8 flex-col gap-5 md:text-[12px]">
@@ -90,13 +106,13 @@ export default function DashboardMiddle() {
                   context?.setHideNavbar(true);
                 }}
               >
-                Details
+                {deflanguage.dashboard.details}
               </p>
             </div>
           </div>
           <div className="">
             <div className="flex flex-col items-center gap-3 md:text-[12px]">
-              <p>Date</p>
+              <p>{deflanguage.dashboard.date}</p>
               <div className="border border-yellowButton w-10"></div>
             </div>
             <div className="flex items-center mt-10 flex-col gap-5 md:text-[12px]">

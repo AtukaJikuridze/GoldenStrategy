@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import timer from "../../../assets/timer.svg";
 import axios from "axios";
 import { API } from "../../../baseAPI";
 import AfterAnswer from "./AfterAnswer";
@@ -8,6 +7,7 @@ import Help from "./Help";
 import { MyContext } from "../../../Context/myContext";
 import AnswerList from "./AnswerList";
 import SeenAllQuestions from "./SeenAllQuestions";
+import Timer from "./Timer";
 
 export default function Question() {
   interface QuestionInfo {
@@ -19,6 +19,7 @@ export default function Question() {
 
   const [questionInfo, setQuestionInfo] = useState<QuestionInfo | null>(null);
   const [answer, setAnswer] = useState<string | null>(null);
+
   const [answerForX, setAnswerForX] = useState<string | null>(null);
   const [questionQuantity, setQuestionQuantity] = useState<number>(0);
   const [hasHealth, setHasHealth] = useState<boolean | null>(null);
@@ -30,15 +31,12 @@ export default function Question() {
   const [hasHelp, setHasHelp] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string>(""); // ჰელფი ან სიცოცხლე თუარ გაქ ეს მესიჯი გამოაქ
   const [questionResponsed, setQuestionResponsed] = useState<boolean>(false); // კითხვის პასუხი მოსულია თუ თრუა
+  const [time, setTime] = useState<number | null>(null);
+
   const context = useContext(MyContext);
+  console.log("time" + " " + time);
 
   useEffect(() => {
-    console.log("questionResponsed" + " " + questionResponsed);
-  }, [questionResponsed]);
-
-  useEffect(() => {
-    console.log(answer);
-
     if (usingHelp !== null) {
       axios
         .post(`${API}/questions/active`, {
@@ -66,8 +64,6 @@ export default function Question() {
             error.response.data ===
               "You don't have enough help points to use help."
           ) {
-            console.log(true);
-
             setHasHelp(false);
             setErrorMessage("You don't have enough help points to use help.");
           } else if (
@@ -100,7 +96,7 @@ export default function Question() {
       question_id: questionInfo?.question_id,
       answer: myAnswer || answerForX,
       user_id: context?.userInfo?.id,
-      time: 40,
+      time,
       use_x: useX || 0,
       language: "EN",
     };
@@ -132,6 +128,11 @@ export default function Question() {
 
   return (
     <div className="flex flex-col gap-5  md:w-full">
+      <Timer
+        setTime={setTime}
+        answer={answer}
+        questionResponsed={questionResponsed}
+      />
       {hasHealth === false ? (
         <NoMoreHp />
       ) : answer ? (
@@ -196,11 +197,6 @@ export default function Question() {
             </>
           ) : (
             <>
-              <div className="flex relative gap-2 items-center justify-center">
-                <img src={timer} alt="Timer" />
-                <p>0:50</p>
-              </div>
-
               {questionInfo ? (
                 <>
                   {questionInfo ? (

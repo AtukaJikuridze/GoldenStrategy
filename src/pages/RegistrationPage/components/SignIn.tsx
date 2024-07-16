@@ -6,6 +6,8 @@ import SignInForm from "./SignInForm";
 import { MyContext } from "../../../Context/myContext";
 import { useContext } from "react";
 import { API } from "../../../baseAPI";
+import languageData_ge from "../../../assets/language_ge.json";
+import languageData_en from "../../../assets/language_en.json";
 
 interface loginTypes {
   userEmail: string;
@@ -13,6 +15,13 @@ interface loginTypes {
 
 export default function SignUp() {
   const context = useContext(MyContext);
+  let deflanguage: any = [];
+  const gotLanguage = context?.defaultLanguage;
+  if (gotLanguage == "EN") {
+    deflanguage = languageData_en;
+  } else {
+    deflanguage = languageData_ge;
+  }
 
   const [userTOKEN, setUserTOKEN] = useState("");
   const [isUserVerified, SetIsUserVerified] = useState<null | undefined | true>(
@@ -40,11 +49,9 @@ export default function SignUp() {
 
   useEffect(() => {
     if (userTOKEN) {
-      console.log(userTOKEN);
       axios
-        .post(`${API}/users/${userTOKEN}`, { language: context?.language })
+        .post(`${API}/users`, { language: "EN", token: userTOKEN })
         .then((res) => {
-          console.log(res);
           context?.setUserInfo(res.data);
         });
     }
@@ -61,15 +68,22 @@ export default function SignUp() {
       .post(`${API}/auth/login`, {
         usernameOrEmail: inputValues.usernameOrEmail,
         password: inputValues.password,
+        language: "EN",
       })
       .then((res) => {
-        if (res.data.status === "you are not verified") {
+        if (
+          res.data.status === "you are not verified" ||
+          res.data.status === "თქვენ გავლილი არ გაქვთ ვერიფიკაცია"
+        ) {
           setLoginInfo({ userEmail: res.data.email });
           SetIsUserVerified(null);
-        } else if (res.data.status === "payment status is not valid") {
-          setErrorMessage(
-            "You have not paid the registration fee, write to us on Facebook page"
-          );
+        } else if (
+          res.data.status ===
+            "You have not paid the registration fee, write to us on Facebook page" ||
+          res.data.status ===
+            "თქვენ არ გაქვთ გადახდილი რეგისტრაციის საფასური მოგვწერეთ ფეისბუკ ფეიჯზე"
+        ) {
+          setErrorMessage(res.data.status);
         } else {
           setUserTOKEN(res.data.token);
           context?.setIsLoggined(true);
@@ -78,7 +92,7 @@ export default function SignUp() {
         }
       })
       .catch(() => {
-        setErrorMessage("Username/email or password is incorrect");
+        setErrorMessage(deflanguage.loginPage.incorrect);
       });
   };
 
@@ -95,19 +109,20 @@ export default function SignUp() {
             </button>
             <div className="flex flex-col justify-center items-center h-full">
               <p className="text-center text-[17px] mb-3">{errorMessage}</p>
-              {errorMessage !== "Username/email or password is incorrect" ? (
+              {errorMessage !== deflanguage.loginPage.incorrect ? (
                 <span>
-                  Click to buy{" "}
+                  {deflanguage.loginPage.click} {""}
+
                   <a
                     href="https://www.facebook.com/profile.php?id=61561387173137"
                     target="blank"
                     className="text-blue-400"
                   >
-                    here
+                    {deflanguage.loginPage.here}
                   </a>
                 </span>
               ) : (
-                <h1>Please enter correct user details</h1>
+                <h1>{deflanguage.loginPage.enterCorrectDetails}</h1>
               )}
             </div>
           </div>
@@ -118,8 +133,8 @@ export default function SignUp() {
         <VerificationPannel SetIsUserVerified={SetIsUserVerified} />
       ) : (
         <>
-          <h1 className="text-2xl">Sign In</h1>
-          <p>Enter Your Information</p>
+          <h1 className="text-2xl"></h1>
+          <p>{deflanguage.loginPage.enterInfo}</p>
           <SignInForm
             showPassword={showPassword}
             setShowPassword={setShowPassword}
@@ -129,9 +144,9 @@ export default function SignUp() {
             inputValues={inputValues}
           />
           <div className="flex gap-5 mt-14 lg:mb-14">
-            <p className="cursor-pointer">Privacy Policy</p>
-            <p className="cursor-pointer">FAQ</p>
-            <p className="cursor-pointer">Contact Us</p>
+            <p className="cursor-pointer">{deflanguage.loginPage.privPol}</p>
+            <p className="cursor-pointer">{deflanguage.loginPage.faq}</p>
+            <p className="cursor-pointer">{deflanguage.loginPage.contact}</p>
           </div>
         </>
       )}

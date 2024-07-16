@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 export const MyContext = createContext<ContextInterface | undefined>(undefined);
+
 
 interface ContextInterface {
   userInfo: userInterface | null;
@@ -12,12 +13,14 @@ interface ContextInterface {
   setUserInfo: Function;
   setUserTransactions: Function;
   setLanguage: Function;
+  defaultLanguage:string
+  setDefaultLanguage: Function;
 }
 interface userInterface {
   avatar: string;
   balance: number;
   balancetobecollected: number;
-  coin: number;
+  point: number;
   email: string;
   exchanging_to_money: number;
   gift_card_id: number;
@@ -50,10 +53,19 @@ export interface tranasctionsInterface {
   amount: number;
   date: string;
   status: string;
-  trasaction_info: string;
+  transaction_info: string;
 }
 
 export const MyContextProvider = ({ children }: any) => {
+   const [defaultLanguage, setDefaultLanguage] = useState(
+     localStorage.getItem("language") || "EN"
+   );
+
+   useEffect(() => {
+     localStorage.setItem("language", defaultLanguage);
+   }, [defaultLanguage]);
+
+
   const [userTransactions, setUserTransactions] =
     useState<null | tranasctionsInterface>(null);
   const [hideNavbar, setHideNavbar] = useState<boolean>(false);
@@ -77,6 +89,8 @@ export const MyContextProvider = ({ children }: any) => {
         setHideNavbar,
         language,
         setLanguage,
+        defaultLanguage,
+        setDefaultLanguage,
       }}
     >
       {children}

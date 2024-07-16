@@ -5,11 +5,20 @@ import TopRating from "./TopRating";
 import { useContext } from "react";
 import { MyContext } from "../../../Context/myContext";
 import Loader from "../../../components/Loader";
+import languageData_ge from "../../../assets/language_ge.json";
+import languageData_en from "../../../assets/language_en.json";
 export default function MiddleTopCards(props: {
   setIsRankLeaderboardActive: Function;
   leaderBoardInfo: any;
 }) {
-  const context = useContext(MyContext);
+    const context = useContext(MyContext);
+    let deflanguage: any = [];
+    const gotLanguage = context?.defaultLanguage;
+    if (gotLanguage == "EN") {
+      deflanguage = languageData_en;
+    } else {
+      deflanguage = languageData_ge;
+    }
 
   return (
     <div className="flex w-full justify-between 2xl:flex-col  ">
@@ -18,19 +27,19 @@ export default function MiddleTopCards(props: {
           <img src={creditCard} alt="" className="w-[200px]" />
           <div className="text-center px-5">
             <div className="flex justify-center items-center gap-3">
-              <p>Total Balance:</p>
+              <p>{deflanguage.dashboard.balance}:</p>
               <p className="text-sm">{context?.userInfo?.balance}$</p>
             </div>
             <div className="flex justify-center items-center gap-3">
-              <p>Aviable Coins:</p>
-              <p className="text-sm my-5 ">{context?.userInfo?.coin}</p>
+              <p>{deflanguage.dashboard.points}:</p>
+              <p className="text-sm my-5 ">{context?.userInfo?.point}</p>
             </div>
             <div className="flex gap-5 3xl:flex-col">
               <button className="text-black text-sm bg-yellowButton py-2 rounded-lg w-[150px] text-center">
-                Deposit
+                {deflanguage.dashboard.deposit}
               </button>
               <button className="text-sm border border-yellowButton py-2 rounded-lg w-[150px] text-center">
-                Withdraw
+                {deflanguage.dashboard.Withdraw}
               </button>
             </div>
           </div>
@@ -43,7 +52,8 @@ export default function MiddleTopCards(props: {
           />
           <div className="bg-yellowButton md:w-[20%]  text-center p-2 rounded-md absolute  left-1/2 transform -translate-x-1/2 bottom-5   ">
             <p className="text-black text-sm">
-              Tickets {context?.userInfo?.tickets}
+              {deflanguage.dashboard.tickets}
+              {context?.userInfo?.tickets}
             </p>
           </div>
         </div>
@@ -56,7 +66,7 @@ export default function MiddleTopCards(props: {
             context?.setHideNavbar(true);
           }}
         >
-          <p>Top Ranks</p>
+          <p>{deflanguage.dashboard.topRanks}</p>
           <img src={topRanks} alt="" />
         </div>
 

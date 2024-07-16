@@ -2,11 +2,20 @@ import { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../../Context/myContext";
 import { tranasctionsInterface } from "../../../Context/myContext";
 import Loader from "../../../components/Loader";
+import languageData_ge from "../../../assets/language_ge.json";
+import languageData_en from "../../../assets/language_en.json";
 export default function TransactionDetails(props: {
   isTransactionDetailsActive: boolean;
   setIsTransactionDetailsActive: Function;
 }) {
-  const context = useContext(MyContext);
+const context = useContext(MyContext);
+let deflanguage: any = [];
+const gotLanguage = context?.defaultLanguage;
+if (gotLanguage == "EN") {
+  deflanguage = languageData_en;
+} else {
+  deflanguage = languageData_ge;
+}
   const [allTransaction, setAllTransaction] = useState<null | any>(null);
 
   useEffect(() => {
@@ -44,18 +53,20 @@ export default function TransactionDetails(props: {
           </button>
         </div>
 
-        <p className="text-center my-14 text-xl">Transaction Details</p>
+        <p className="text-center my-14 text-xl">
+          {deflanguage.dashboard.transDetails}
+        </p>
         <div className="flex justify-between   mb-9">
           <div className="flex flex-col items-center w-[33%]">
-            <p> Transaction</p>
+            <p> {deflanguage.dashboard.transaction}</p>
             <div className=" mt-2 w-[45px] h-[2px] bg-yellowButton shadow-yellowShadow"></div>
           </div>
           <div className="flex flex-col items-center w-[33%]">
-            <p> Amount</p>
+            <p> {deflanguage.dashboard.amount}</p>
             <div className=" mt-2 w-[45px] h-[2px] bg-yellowButton shadow-yellowShadow"></div>
           </div>
           <div className="flex flex-col items-center w-[33%]">
-            <p> Date</p>
+            <p> {deflanguage.dashboard.date}</p>
             <div className=" mt-2 w-[45px] h-[2px] bg-yellowButton shadow-yellowShadow"></div>
           </div>
         </div>
@@ -64,7 +75,7 @@ export default function TransactionDetails(props: {
           allTransaction?.map((e: tranasctionsInterface, i: number) => (
             <div className="flex justify-between mb-8  " key={i}>
               <div className="flex flex-col items-center  w-[33%]">
-                <p className="capitalize"> {e.trasaction_info}</p>
+                <p className="capitalize"> {e.transaction_info}</p>
               </div>
               <div className="flex flex-col items-center w-[33%]">
                 <p> {e.amount}$</p>

@@ -4,6 +4,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { API } from "../../../baseAPI";
 import InputMessageComp from "../../../components/InputMessage";
 import { MyContext } from "../../../Context/myContext";
+import languageData_ge from "../../../assets/language_ge.json";
+import languageData_en from "../../../assets/language_en.json";
 
 export default function SignUp(props: { setIsLogging: Function }) {
   const context = useContext(MyContext);
@@ -40,7 +42,7 @@ export default function SignUp(props: { setIsLogging: Function }) {
         password: formValue.password,
         email: formValue.email,
         avatar: formValue.avatar,
-        refferalCode: formValue.referralCode ? formValue.referralCode : null,
+        referralCode: formValue.referralCode ? formValue.referralCode : null,
         language: context?.language,
       })
       .then((res: any) => {
@@ -62,17 +64,23 @@ export default function SignUp(props: { setIsLogging: Function }) {
   };
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
+ let deflanguage: any = [];
+ const gotLanguage = context?.defaultLanguage;
+ if (gotLanguage == "EN") {
+   deflanguage = languageData_en;
+ } else {
+   deflanguage = languageData_ge;
+ }
   return (
     <div className="flex flex-col justify-center items-center gap-5 xl:w-full ">
-      <h1 className="text-2xl">Sign Up</h1>
-      <p>Enter Your Infromation</p>
+      <h1 className="text-2xl">{deflanguage.loginPage.signUp}</h1>
+      <p>{deflanguage.loginPage.enterInfo}</p>
       <form
         className="flex flex-col gap-5 lg:w-full"
         onSubmit={handleFormsubmit}
       >
         <label>
-          <p className="mb-2 mx-0.5">UserName</p>
+          <p className="mb-2 mx-0.5">{deflanguage.loginPage.user}</p>
           <input
             name="username"
             type="text"
@@ -84,7 +92,7 @@ export default function SignUp(props: { setIsLogging: Function }) {
         </label>
 
         <label className="">
-          <p className="mb-2 mx-0.5">Gender</p>
+          <p className="mb-2 mx-0.5">{deflanguage.loginPage.gender}</p>
 
           <select
             name="avatar"
@@ -93,16 +101,16 @@ export default function SignUp(props: { setIsLogging: Function }) {
             className=" bg-transparent w-[470px] py-3 outline-none border-gray-600 border  rounded-md px-3 lg:w-[100%] "
           >
             <option value="1" className="bg-black  rounded-md px-3">
-              Male
+              {deflanguage.loginPage.male}
             </option>
             <option value="0" className="bg-black  rounded-md px-3">
-              Female
+              {deflanguage.loginPage.female}
             </option>
           </select>
         </label>
 
         <label>
-          <p className="mb-2 mx-0.5">Email</p>
+          <p className="mb-2 mx-0.5">{deflanguage.loginPage.email}</p>
           <input
             name="email"
             type="text"
@@ -113,7 +121,7 @@ export default function SignUp(props: { setIsLogging: Function }) {
           />
         </label>
         <label>
-          <p className="mb-2 mx-0.5">Password</p>
+          <p className="mb-2 mx-0.5">{deflanguage.loginPage.Password}</p>
           <div className="relative ">
             <input
               name="password"
@@ -138,7 +146,7 @@ export default function SignUp(props: { setIsLogging: Function }) {
           </div>
         </label>
         <label>
-          <p className="mb-2 mx-0.5">Referral Code (Optional)</p>
+          <p className="mb-2 mx-0.5">{deflanguage.loginPage.refCode}</p>
           <input
             name="referralCode"
             type="number"
@@ -159,14 +167,14 @@ export default function SignUp(props: { setIsLogging: Function }) {
         )}
         <input
           className="w-[470px] lg:w-[100%] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5 outline-none cursor-pointer hover:bg-yellowButtonHover transition-all"
-          value={"SIGN UP"}
+          value={deflanguage.loginPage.signUp}
           type="submit"
         />
       </form>
       <div className="flex gap-5 mt-14 lg:mb-14">
-        <p>Privacy Policy</p>
-        <p>FAQ</p>
-        <p>Contact Us</p>
+        <p className="cursor-pointer">{deflanguage.loginPage.privPol}</p>
+        <p className="cursor-pointer">{deflanguage.loginPage.faq}</p>
+        <p className="cursor-pointer">{deflanguage.loginPage.contact}</p>
       </div>
     </div>
   );

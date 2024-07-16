@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import user from "../../../assets/user.svg";
 import { MyContext } from "../../../Context/myContext";
+import languageData_ge from "../../../assets/language_ge.json";
+import languageData_en from "../../../assets/language_en.json";
 
 interface userInfoInterface {
   username: string;
@@ -13,6 +15,13 @@ export default function TopRankLeaderboard(props: {
   leaderBoardInfo: any;
 }) {
   const context = useContext(MyContext);
+  let deflanguage: any = [];
+  const gotLanguage = context?.defaultLanguage;
+  if (gotLanguage == "EN") {
+    deflanguage = languageData_en;
+  } else {
+    deflanguage = languageData_ge;
+  }
   return (
     <div
       className={`bg-bgBlackTransparent w-full  h-full fixed left-0 top-0  transition-all   ${
@@ -48,14 +57,14 @@ export default function TopRankLeaderboard(props: {
         <p className="text-center my-24 text-xl "></p>
         <div className="flex justify-between   mb-9">
           <div className="flex flex-col items-center w-[33%]">
-            <p> Top Ranks</p>
+            <p>{deflanguage.dashboard.topRanks}</p>
           </div>
           <div className="flex flex-col items-center w-[33%]">
-            <p> Username</p>
+            <p>{deflanguage.loginPage.user}</p>
             <div className=" mt-2 w-[45px] h-[2px] bg-yellowButton shadow-yellowShadow"></div>
           </div>
           <div className="flex flex-col items-center w-[33%]">
-            <p> Point</p>
+            <p>{deflanguage.dashboard.points}</p>
             <div className=" mt-2 w-[45px] h-[2px] bg-yellowButton shadow-yellowShadow"></div>
           </div>
         </div>

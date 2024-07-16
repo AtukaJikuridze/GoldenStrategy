@@ -13,7 +13,6 @@ export default function InGame() {
         <h1 className="text-xl">GAME</h1>
         <div className="w-[45px] h-[2px] bg-yellowButton shadow-yellowShadow"></div>
       </div>
-      {/* <Help /> */}
       <Question />
     </div>
   );

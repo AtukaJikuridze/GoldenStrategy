@@ -1,4 +1,8 @@
+import { useContext } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { MyContext } from "../../../Context/myContext";
+import languageData_ge from "../../../assets/language_ge.json";
+import languageData_en from "../../../assets/language_en.json";
 
 interface formTypes {
   showPassword: boolean;
@@ -20,13 +24,21 @@ export default function SignInForm({
   setShowPassword,
   setForgotPassword,
 }: formTypes) {
+  const context = useContext(MyContext);
+  let deflanguage: any = [];
+  const gotLanguage = context?.defaultLanguage;
+  if (gotLanguage == "EN") {
+    deflanguage = languageData_en;
+  } else {
+    deflanguage = languageData_ge;
+  }
   return (
     <form
       className="flex flex-col gap-5 xl:w-[50%] md:!w-full "
       onSubmit={loginSubmit}
     >
       <label>
-        <p className="mb-2 mx-0.5">UserName</p>
+        <p className="mb-2 mx-0.5">{deflanguage.loginPage.UserName}</p>
         <input
           onChange={handleInput}
           value={inputValues.usernameOrEmail}
@@ -36,7 +48,7 @@ export default function SignInForm({
         />
       </label>
       <label>
-        <p className="mb-2 mx-0.5">Password</p>
+        <p className="mb-2 mx-0.5">{deflanguage.loginPage.Password}</p>
         <div style={{ zIndex: 0, position: "relative" }}>
           <input
             name="password"
@@ -59,10 +71,10 @@ export default function SignInForm({
         </div>
       </label>
       <p className="cursor-pointer" onClick={() => setForgotPassword(true)}>
-        Forgot Password?
+       {deflanguage.loginPage.forgot}
       </p>
       <input
-        value={"SIGN IN"}
+        value={deflanguage.loginPage.signIn}
         type="submit"
         className="text-center cursor-pointer w-[470px] xl:w-[100%] py-5 bg-yellowButton rounded-md shadow-yellowShadow mt-5 hover:bg-yellowButtonHover transition-all"
       />

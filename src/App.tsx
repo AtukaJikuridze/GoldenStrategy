@@ -6,16 +6,26 @@ import Navbar from "./components/Navbar";
 import Game from "./pages/Game/Game";
 import Shop from "./pages/Shop/Shop";
 import { Route, Routes } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MyContext } from "./Context/myContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "./baseAPI";
 import FAQ from "./pages/FAQ/FAQ";
+import SelectLanguage from "./pages/RegistrationPage/components/SelectLanguage";
 
 function App() {
   const navigate = useNavigate();
   const context = useContext(MyContext);
+  const [currentLanguage, setCurrentLanguage] = useState<any>(
+    context?.defaultLanguage === "GE" ? "ninoM" : "interMedium"
+  );
+  useEffect(() => {
+    setCurrentLanguage(
+      context?.defaultLanguage === "GE" ? "ninoM" : "interMedium"
+    );
+  }, [context?.defaultLanguage]);
+
   useEffect(() => {
     axios
       .post(`${API}/users/delete-seen-questions`, {
@@ -23,10 +33,17 @@ function App() {
       })
       .then((res) => console.log(res));
 
-    axios.get(`${API}/users/${localStorage.getItem("Token")}`).then((res) => {
-      context?.setUserInfo(res.data.userData[0]);
-      context?.setUserTransactions(res.data.transactions);
-    });
+    axios
+      .post(`${API}/users`, {
+        token: localStorage.getItem("Token"),
+        language: "EN",
+      })
+      .then((res) => {
+        console.log(res.data);
+
+        context?.setUserInfo(res.data.userData[0]);
+        context?.setUserTransactions(res.data.transactions);
+      });
   }, []);
   useEffect(() => {
     if (!context?.isLoggined) {
@@ -37,9 +54,12 @@ function App() {
   }, [context?.isLoggined]);
 
   return (
-    <div className={`App ${context?.isLoggined ? "lg:pt-32" : ""}`}>
+    <div
+      className={`App ${context?.isLoggined ? "lg:pt-32" : ""} `}
+      style={{ fontFamily: currentLanguage }}
+    >
       {context?.isLoggined ? <Navbar /> : ""}
-
+      <SelectLanguage />
       <Routes>
         <Route path="GoldenStrategy/Login" element={<RegistrationPage />} />
         <Route path="GoldenStrategy/Dashboard" element={<Dashboard />} />

@@ -18,6 +18,7 @@ export default {
       },
       fontFamily: {
         interM: ["interMedium"],
+        ninoM: ["bpg_nino_mtavruli_normal"],
       },
       screens: {
         "4xl": { max: "1800px" },
